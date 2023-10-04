@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Auth\Events\Registered;
 
 
 class User extends Authenticatable
@@ -58,6 +59,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($user) {
+            // event(new Registered($user));
+            $user->sendEmailVerificationNotification();
+        });
+        self::updated(function ($user) {});
+        self::deleted(function ($user) {});
+    }
+
     //only the `deleted` event will get logged automatically
     protected static $recordEvents = ['created', 'updated', 'deleted'];
 
@@ -76,6 +88,16 @@ class User extends Authenticatable
         return Attribute::make(
             set: fn (string $value) => Hash::make($value),
         );
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Modules\Authentication\Notifications\VerifyEmailQueued);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Modules\Authentication\Notifications\ResetPasswordQueued($token));
     }
 
     /**

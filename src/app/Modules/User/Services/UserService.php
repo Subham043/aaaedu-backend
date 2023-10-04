@@ -41,7 +41,9 @@ class UserService
 
     public function create(array $data): User
     {
-        return User::create($data);
+        $user = User::create($data);
+        // $user->sendEmailVerificationNotification();
+        return $user;
     }
 
     public function update(array $data, User $user): User

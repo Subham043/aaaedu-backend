@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('/email/verify')->group(function () {
+    Route::get('/{id}/{hash}', [VerifyRegisteredUserController::class, 'verify_email', 'as' => 'verify_email'])->name('verification.verify');
 });
