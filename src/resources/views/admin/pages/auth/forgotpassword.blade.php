@@ -13,13 +13,6 @@
                     <h5 class="text-primary">Forgot Password?</h5>
                     <p class="text-muted">Reset password with SNN RAJ CORP</p>
 
-                    <lord-icon
-                        src="https://cdn.lordicon.com/rhvddzym.json"
-                        trigger="loop"
-                        colors="primary:#0ab39c"
-                        class="avatar-xl">
-                    </lord-icon>
-
                 </div>
 
                 <div class="alert alert-borderless alert-warning text-center mb-2 mx-2" role="alert">

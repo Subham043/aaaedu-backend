@@ -24,7 +24,7 @@
                         <div class="col-lg-12">
                             <div class="text-center mt-sm-5 mb-0 text-white-50">
                                 <div>
-                                    <a href="index.html" class="d-inline-block auth-logo">
+                                    <a href="{{route('login.get')}}" class="d-inline-block auth-logo">
                                         <img src="{{ asset('admin/images/logo.png') }}" alt="">
                                     </a>
                                 </div>
