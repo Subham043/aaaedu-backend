@@ -67,5 +67,35 @@ class SeoSeeder extends Seeder
             'slug' => 'faq-page',
         ]);
 
+        Seo::create([
+            'page_name' => 'Gallery Page',
+            'slug' => 'gallery-page',
+        ]);
+
+        Seo::create([
+            'page_name' => 'Day Scholar & Residential Page',
+            'slug' => 'day-scholar-page',
+        ]);
+
+        Seo::create([
+            'page_name' => 'Vrddhi Page',
+            'slug' => 'vrddhi-page',
+        ]);
+
+        Seo::create([
+            'page_name' => 'Vrddhi Syllabus Page',
+            'slug' => 'vrddhi-syllabus-page',
+        ]);
+
+        Seo::create([
+            'page_name' => 'PUC Admission Page',
+            'slug' => 'puc-page',
+        ]);
+
+        Seo::create([
+            'page_name' => 'Class 8, 9, 10 Admission Page',
+            'slug' => 'not-puc-page',
+        ]);
+
     }
 }
