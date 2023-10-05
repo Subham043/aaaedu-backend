@@ -13,11 +13,6 @@ use Illuminate\Auth\Events\PasswordReset;
 
 class UserResetPasswordController extends Controller
 {
-    public function get($token){
-
-        return view('admin.pages.auth.reset_password');
-    }
-
     public function post(UserResetPasswordPostRequest $request, $token){
         //code...
 
