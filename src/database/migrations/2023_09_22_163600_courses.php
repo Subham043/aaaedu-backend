@@ -23,12 +23,6 @@ return new class extends Migration
             $table->string('image_title', 500)->nullable();
             $table->string('class', 500)->default(CourseClass::NOT_PUC->value);
             $table->boolean('is_active')->default(0);
-            $table->boolean('include_testimonial')->default(0);
-            $table->text('testimonial_heading')->nullable();
-            $table->boolean('include_topper')->default(0);
-            $table->text('topper_heading')->nullable();
-            $table->boolean('include_staff')->default(0);
-            $table->text('staff_heading')->nullable();
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();

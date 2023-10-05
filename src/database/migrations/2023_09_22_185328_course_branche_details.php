@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->text('description')->nullable();
             $table->text('description_unfiltered')->nullable();
+            $table->boolean('include_testimonial')->default(0);
+            $table->text('testimonial_heading')->nullable();
+            $table->boolean('include_topper')->default(0);
+            $table->text('topper_heading')->nullable();
+            $table->boolean('include_staff')->default(0);
+            $table->text('staff_heading')->nullable();
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
