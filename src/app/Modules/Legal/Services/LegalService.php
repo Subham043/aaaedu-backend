@@ -36,6 +36,11 @@ class LegalService
 
     public function getBySlug(String $slug): Legal|null
     {
+        return Legal::where('slug', $slug)->firstOrFail();
+    }
+
+    public function getBySlugMain(String $slug): Legal|null
+    {
         return Legal::where('slug', $slug)->where('is_active', true)->firstOrFail();
     }
 

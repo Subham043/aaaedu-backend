@@ -16,7 +16,7 @@ class UserLegalDetailController extends Controller
     }
 
     public function get($slug){
-        $legal = $this->legalService->getBySlug($slug);
+        $legal = $this->legalService->getBySlugMain($slug);
         return response()->json([
             'message' => "Legal Pages recieved successfully.",
             'legal' => UserLegalCollection::make($legal),
