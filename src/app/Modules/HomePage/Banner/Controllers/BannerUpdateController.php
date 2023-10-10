@@ -33,10 +33,10 @@ class BannerUpdateController extends Controller
                 $this->bannerService->saveImage($banner);
             }
             if($request->hasFile('counter_image_1')){
-                $this->bannerService->saveImage($banner);
+                $this->bannerService->saveCounterImage1($banner);
             }
             if($request->hasFile('counter_image_2')){
-                $this->bannerService->saveImage($banner);
+                $this->bannerService->saveCounterImage2($banner);
             }
             return response()->json(["message" => "Banner updated successfully."], 201);
         } catch (\Throwable $th) {
