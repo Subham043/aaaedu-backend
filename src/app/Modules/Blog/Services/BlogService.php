@@ -29,7 +29,7 @@ class BlogService
         $query = Blog::where('is_active', true);
         return QueryBuilder::for($query)
                 ->defaultSort('id')
-                ->allowedSorts('id', 'name')
+                ->allowedSorts('id', 'name', 'published_on')
                 ->allowedFilters([
                     'is_popular',
                     AllowedFilter::custom('search', new CommonFilter),

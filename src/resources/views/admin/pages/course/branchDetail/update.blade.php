@@ -70,7 +70,7 @@
                                         <div class="mt-4 mt-md-0">
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
-                                                    <input class="form-check-input" type="checkbox" role="switch" id="include_testimonial" name="include_testimonial" {{$data->include_testimonial==false ? '' : 'checked'}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="include_testimonial" name="include_testimonial" {{!empty($data) && $data->include_testimonial==false ? '' : 'checked'}}>
                                                     <label class="form-check-label" for="include_testimonial">Include Testimonial</label>
                                                 </div>
                                             </div>
@@ -102,7 +102,7 @@
                                         <div class="mt-4 mt-md-0">
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
-                                                    <input class="form-check-input" type="checkbox" role="switch" id="include_achiever" name="include_achiever" {{$data->include_topper==false ? '' : 'checked'}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="include_achiever" name="include_achiever" {{!empty($data) && $data->include_topper==false ? '' : 'checked'}}>
                                                     <label class="form-check-label" for="include_achiever">Include Achiever</label>
                                                 </div>
                                             </div>
@@ -134,7 +134,7 @@
                                         <div class="mt-4 mt-md-0">
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
-                                                    <input class="form-check-input" type="checkbox" role="switch" id="include_staff" name="include_staff" {{$data->include_staff==false ? '' : 'checked'}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="include_staff" name="include_staff" {{!empty($data) && $data->include_staff==false ? '' : 'checked'}}>
                                                     <label class="form-check-label" for="include_staff">Include Staff</label>
                                                 </div>
                                             </div>

@@ -23,7 +23,7 @@ class Enquiry extends Model
         'name',
         'email',
         'phone',
-        'event_id',
+        'campaign_id',
     ];
 
     protected $casts = [

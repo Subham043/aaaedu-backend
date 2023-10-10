@@ -69,7 +69,7 @@
 
                                                     @if($item->include_form == 1)
                                                     <div class="edit">
-                                                        <a href="{{route('campaign.enquiry.paginate.get', $item->id)}}" class="btn btn-sm btn-warning edit-item-btn">Specifications</a>
+                                                        <a href="{{route('campaign.enquiry.paginate.get', $item->id)}}" class="btn btn-sm btn-warning edit-item-btn">Enquiries</a>
                                                     </div>
                                                     @endif
 

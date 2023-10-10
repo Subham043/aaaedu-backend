@@ -21,13 +21,13 @@ class EnquiryCreateController extends Controller
     }
 
     public function post(EnquiryRequest $request, $campaign_id){
-        $this->campaignService->getById($campaign_id);
+        $data = $this->campaignService->getById($campaign_id);
         try {
             //code...
             $campaignEnquiry = $this->enquiryService->create(
                 [
                     ...$request->validated(),
-                    'campaign_id' => $campaign_id
+                    'campaign_id' => $data->id
                 ]
             );
             (new RateLimitService($request))->clearRateLimit();

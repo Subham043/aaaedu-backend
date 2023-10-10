@@ -36,11 +36,11 @@ class BranchDetailUpdateController extends Controller
         $branch = $this->branchService->getById($branch_id);
         $data = $this->branchDetailService->getByCourseIdAndBranchId($course_id, $branch_id);
         $testimonial = $this->testimonialService->all();
-        $testimonials =$data->testimonials->pluck('id')->toArray();
+        $testimonials = !empty($data) ? $data->testimonials->pluck('id')->toArray() : [];
         $achiever = $this->achieverService->all();
-        $achievers =$data->achievers->pluck('id')->toArray();
+        $achievers = !empty($data) ? $data->achievers->pluck('id')->toArray() : [];
         $staff = $this->staffService->all();
-        $staffs =$data->staffs->pluck('id')->toArray();
+        $staffs = !empty($data) ? $data->staffs->pluck('id')->toArray() : [];
         return view('admin.pages.course.branchDetail.update', compact(['data', 'course_id', 'branch_id', 'course', 'branch', 'testimonial', 'testimonials', 'achiever', 'achievers', 'staff', 'staffs']));
     }
 
