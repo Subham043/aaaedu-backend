@@ -53,7 +53,7 @@ class StudentService
             'categories' => function($q){
                 $q->where('is_active', true);
             },
-        ])->latest();
+        ])->orderBy('rank', 'ASC');
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::callback('has_categories', function (Builder $query, $value) {
