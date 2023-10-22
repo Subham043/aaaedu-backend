@@ -49,11 +49,18 @@ class StudentService
 
     public function paginateMain(Int $total = 10): LengthAwarePaginator
     {
+        $queryOrder = "CASE WHEN rank = 'qualified' THEN 3 ";
+        $queryOrder .= "WHEN rank = 'Qualified' THEN 2 ";
+        $queryOrder .= "ELSE 1 END";
+
         $query = Student::with([
             'categories' => function($q){
                 $q->where('is_active', true);
             },
-        ])->orderBy('rank', 'ASC');
+        ])
+        ->orderByRaw($queryOrder)
+        ->orderByRaw('LENGTH(rank) ASC')
+        ->orderBy('rank', 'ASC');
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::callback('has_categories', function (Builder $query, $value) {
