@@ -59,7 +59,7 @@ class StudentService
             },
         ])
         ->orderByRaw($queryOrder)
-        ->orderByRaw('LENGTH(rank) ASC')
+        ->orderByRaw('LENGTH(`rank`) ASC')
         ->orderBy('rank', 'ASC');
         return QueryBuilder::for($query)
                 ->allowedFilters([
