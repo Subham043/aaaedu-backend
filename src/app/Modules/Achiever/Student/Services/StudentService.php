@@ -49,8 +49,8 @@ class StudentService
 
     public function paginateMain(Int $total = 10): LengthAwarePaginator
     {
-        $queryOrder = 'CASE WHEN `rank` = qualified THEN 3 ';
-        $queryOrder .= 'WHEN `rank` = Qualified THEN 2 ';
+        $queryOrder = 'CASE WHEN `rank` = "qualified" THEN 3 ';
+        $queryOrder .= 'WHEN `rank` = "Qualified" THEN 2 ';
         $queryOrder .= 'ELSE 1 END';
 
         $query = Student::with([
