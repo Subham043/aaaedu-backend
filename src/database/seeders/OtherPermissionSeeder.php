@@ -124,5 +124,11 @@ class OtherPermissionSeeder extends Seeder
         Permission::create(['name' => 'edit mission vision']);
         Permission::create(['name' => 'list mission vision']);
 
+        //permission for tests
+        Permission::create(['name' => 'edit tests']);
+        Permission::create(['name' => 'delete tests']);
+        Permission::create(['name' => 'create tests']);
+        Permission::create(['name' => 'list tests']);
+
     }
 }

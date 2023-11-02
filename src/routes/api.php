@@ -52,6 +52,9 @@ use App\Modules\Seo\Controllers\UserSeoDetailController;
 use App\Modules\Settings\Controllers\General\UserGeneralController;
 use App\Modules\TeamMember\Management\Controllers\UserManagementAllController;
 use App\Modules\TeamMember\Staff\Controllers\UserStaffPaginateController;
+use App\Modules\Test\Test\Controllers\UserTestAllController;
+use App\Modules\Test\Test\Controllers\UserTestDetailController;
+use App\Modules\Test\Test\Controllers\UserTestPaginateController;
 use App\Modules\Testimonial\Controllers\UserTestimonialPaginateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -171,6 +174,12 @@ Route::prefix('event')->group(function () {
     Route::get('/', [UserEventPaginateController::class, 'get'])->name('user.event.paginate');
     Route::get('/all', [UserEventAllController::class, 'get'])->name('user.event.all');
     Route::get('/{slug}', [UserEventDetailController::class, 'get'])->name('user.event.detail');
+});
+
+Route::prefix('test')->group(function () {
+    Route::get('/', [UserTestPaginateController::class, 'get'])->name('user.test.paginate');
+    Route::get('/all', [UserTestAllController::class, 'get'])->name('user.test.all');
+    Route::get('/{slug}', [UserTestDetailController::class, 'get'])->name('user.test.detail');
 });
 
 Route::prefix('campaign')->group(function () {
