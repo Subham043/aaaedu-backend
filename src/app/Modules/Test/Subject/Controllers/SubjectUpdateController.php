@@ -12,7 +12,7 @@ class SubjectUpdateController extends Controller
 
     public function __construct(SubjectService $subjectService)
     {
-        $this->middleware('permission:edit subjects', ['only' => ['get','post']]);
+        $this->middleware('permission:edit tests', ['only' => ['get','post']]);
         $this->subjectService = $subjectService;
     }
 

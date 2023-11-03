@@ -15,12 +15,12 @@ class QuizService
 
     public function all(Int $test_id): Collection
     {
-        return Quiz::with('test')->where('test_id', $test_id)->get();
+        return Quiz::with(['test', 'subject'])->where('test_id', $test_id)->get();
     }
 
     public function paginate(Int $total = 10, Int $test_id): LengthAwarePaginator
     {
-        $query = Quiz::with('test')->where('test_id', $test_id)->latest();
+        $query = Quiz::with(['test', 'subject'])->where('test_id', $test_id)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
@@ -31,12 +31,12 @@ class QuizService
 
     public function getById(Int $id): Quiz|null
     {
-        return Quiz::with('test')->findOrFail($id);
+        return Quiz::with(['test', 'subject'])->findOrFail($id);
     }
 
     public function getByTestIdAndId(Int $test_id, Int $id): Quiz|null
     {
-        return Quiz::with('test')->where('test_id', $test_id)->findOrFail($id);
+        return Quiz::with(['test', 'subject'])->where('test_id', $test_id)->findOrFail($id);
     }
 
     public function create(array $data): Quiz

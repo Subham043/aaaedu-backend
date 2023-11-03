@@ -127,6 +127,10 @@ use App\Modules\TeamMember\Staff\Controllers\StaffCreateController;
 use App\Modules\TeamMember\Staff\Controllers\StaffDeleteController;
 use App\Modules\TeamMember\Staff\Controllers\StaffPaginateController;
 use App\Modules\TeamMember\Staff\Controllers\StaffUpdateController;
+use App\Modules\Test\Quiz\Controllers\QuizCreateController;
+use App\Modules\Test\Quiz\Controllers\QuizDeleteController;
+use App\Modules\Test\Quiz\Controllers\QuizPaginateController;
+use App\Modules\Test\Quiz\Controllers\QuizUpdateController;
 use App\Modules\Test\Subject\Controllers\SubjectCreateController;
 use App\Modules\Test\Subject\Controllers\SubjectDeleteController;
 use App\Modules\Test\Subject\Controllers\SubjectPaginateController;
@@ -447,6 +451,14 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/update/{id}', [SubjectUpdateController::class, 'get', 'as' => 'test.subject.update.get'])->name('test.subject.update.get');
                 Route::post('/update/{id}', [SubjectUpdateController::class, 'post', 'as' => 'test.subject.update.post'])->name('test.subject.update.post');
                 Route::get('/delete/{id}', [SubjectDeleteController::class, 'get', 'as' => 'test.subject.delete.get'])->name('test.subject.delete.get');
+            });
+            Route::prefix('/quiz')->group(function () {
+                Route::get('/', [QuizPaginateController::class, 'get', 'as' => 'test.quiz.paginate.get'])->name('test.quiz.paginate.get');
+                Route::get('/create', [QuizCreateController::class, 'get', 'as' => 'test.quiz.create.get'])->name('test.quiz.create.get');
+                Route::post('/create', [QuizCreateController::class, 'post', 'as' => 'test.quiz.create.post'])->name('test.quiz.create.post');
+                Route::get('/update/{id}', [QuizUpdateController::class, 'get', 'as' => 'test.quiz.update.get'])->name('test.quiz.update.get');
+                Route::post('/update/{id}', [QuizUpdateController::class, 'post', 'as' => 'test.quiz.update.post'])->name('test.quiz.update.post');
+                Route::get('/delete/{id}', [QuizDeleteController::class, 'get', 'as' => 'test.quiz.delete.get'])->name('test.quiz.delete.get');
             });
         });
     });

@@ -2,27 +2,36 @@
 
 namespace App\Modules\Test\Quiz\Controllers;
 
+use App\Enums\CorrectAnswer;
+use App\Enums\Difficulty;
 use App\Http\Controllers\Controller;
 use App\Modules\Test\Quiz\Requests\QuizRequest;
 use App\Modules\Test\Quiz\Services\QuizService;
+use App\Modules\Test\Subject\Services\SubjectService;
 
 class QuizUpdateController extends Controller
 {
     private $quizService;
+    private $subjectService;
 
-    public function __construct(QuizService $quizService)
+    public function __construct(QuizService $quizService, SubjectService $subjectService)
     {
-        $this->middleware('permission:edit quizs', ['only' => ['get','post']]);
+        $this->middleware('permission:edit tests', ['only' => ['get','post']]);
         $this->quizService = $quizService;
+        $this->subjectService = $subjectService;
     }
 
-    public function get($quiz_id, $id){
-        $data = $this->quizService->getByTestIdAndId($quiz_id, $id);
-        return view('admin.pages.test.quiz.update', compact(['data', 'quiz_id']));
+    public function get($test_id, $id){
+        $data = $this->quizService->getByTestIdAndId($test_id, $id);
+        return view('admin.pages.test.quiz.update', compact(['data', 'test_id']))->with([
+            'correct_answer' => array_column(CorrectAnswer::cases(), 'value'),
+            'difficulty' => array_column(Difficulty::cases(), 'value'),
+            'subjects' => $this->subjectService->all($test_id),
+        ]);
     }
 
-    public function post(QuizRequest $request, $quiz_id, $id){
-        $quiz = $this->quizService->getByTestIdAndId($quiz_id, $id);
+    public function post(QuizRequest $request, $test_id, $id){
+        $quiz = $this->quizService->getByTestIdAndId($test_id, $id);
         try {
             //code...
             $this->quizService->update(
