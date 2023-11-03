@@ -16,13 +16,13 @@ class SubjectUpdateController extends Controller
         $this->subjectService = $subjectService;
     }
 
-    public function get($subject_id, $id){
-        $data = $this->subjectService->getByTestIdAndId($subject_id, $id);
-        return view('admin.pages.test.subject.update', compact(['data', 'subject_id']));
+    public function get($test_id, $id){
+        $data = $this->subjectService->getByTestIdAndId($test_id, $id);
+        return view('admin.pages.test.subject.update', compact(['data', 'test_id']));
     }
 
-    public function post(SubjectRequest $request, $subject_id, $id){
-        $subject = $this->subjectService->getByTestIdAndId($subject_id, $id);
+    public function post(SubjectRequest $request, $test_id, $id){
+        $subject = $this->subjectService->getByTestIdAndId($test_id, $id);
         try {
             //code...
             $this->subjectService->update(

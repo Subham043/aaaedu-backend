@@ -7,14 +7,14 @@
 
         <!-- start page title -->
         @can('list events')
-        @include('admin.includes.breadcrumb', ['page'=>'Test Subject', 'page_link'=>route('test.subject.paginate.get', $subject_id), 'list'=>['Update']])
+        @include('admin.includes.breadcrumb', ['page'=>'Test Subject', 'page_link'=>route('test.subject.paginate.get', $test_id), 'list'=>['Update']])
         @endcan
         <!-- end page title -->
 
         <div class="row" id="image-container">
-            @include('admin.includes.back_button', ['link'=>route('test.subject.paginate.get', $subject_id)])
+            @include('admin.includes.back_button', ['link'=>route('test.subject.paginate.get', $test_id)])
             <div class="col-lg-12">
-                <form id="countryForm" method="post" action="{{route('test.subject.update.post', [$subject_id, $data->id])}}" enctype="multipart/form-data">
+                <form id="countryForm" method="post" action="{{route('test.subject.update.post', [$test_id, $data->id])}}" enctype="multipart/form-data">
                 @csrf
                     <div class="card">
                         <div class="card-header align-items-center d-flex">
@@ -82,7 +82,7 @@ validation
         var formData = new FormData();
         formData.append('name',document.getElementById('name').value)
 
-        const response = await axios.post('{{route('test.subject.update.post', [$subject_id, $data->id])}}', formData)
+        const response = await axios.post('{{route('test.subject.update.post', [$test_id, $data->id])}}', formData)
         successToast(response.data.message)
         setInterval(location.reload(), 1500);
     }catch (error){
