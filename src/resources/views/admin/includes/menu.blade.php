@@ -161,6 +161,14 @@
                             </li>
                             @endcan
 
+                            @can('list tests')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('test.test.paginate.get')) !== false ? 'active' : ''}}" href="{{route('test.test.paginate.get')}}">
+                                    <i class="ri-a-b"></i> <span data-key="t-widgets">Tests</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             @can('list legal pages')
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),route('legal.paginate.get')) !== false ? 'active' : ''}}" href="{{route('legal.paginate.get')}}">
