@@ -17,7 +17,7 @@ class TestUpdateRequest extends TestCreateRequest
             'slug' => 'required|string|max:500|unique:tests,slug,'.$this->route('id'),
             'description' => 'required|string',
             'description_unfiltered' => 'required|string',
-            'image' => 'required|image|min:1|max:5000',
+            'image' => 'nullable|image|min:1|max:5000',
             'image_alt' => 'nullable|string|max:500',
             'image_title' => 'nullable|string|max:500',
             'is_active' => 'required|boolean',

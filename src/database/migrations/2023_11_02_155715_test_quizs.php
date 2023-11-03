@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('duration', 500)->nullable();
             $table->string('mark', 500)->nullable();
             $table->string('correct_answer', 500)->nullable();
-            $table->foreignId('subject_id')->nullable()->constrained('subjects')->nullOnDelete();
+            $table->foreignId('subject_id')->nullable()->constrained('test_subjects')->nullOnDelete();
             $table->foreignId('test_id')->nullable()->constrained('tests')->nullOnDelete();
             $table->timestamps();
             $table->index(['id', 'created_at']);

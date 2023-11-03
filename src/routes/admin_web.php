@@ -127,6 +127,10 @@ use App\Modules\TeamMember\Staff\Controllers\StaffCreateController;
 use App\Modules\TeamMember\Staff\Controllers\StaffDeleteController;
 use App\Modules\TeamMember\Staff\Controllers\StaffPaginateController;
 use App\Modules\TeamMember\Staff\Controllers\StaffUpdateController;
+use App\Modules\Test\Subject\Controllers\SubjectCreateController;
+use App\Modules\Test\Subject\Controllers\SubjectDeleteController;
+use App\Modules\Test\Subject\Controllers\SubjectPaginateController;
+use App\Modules\Test\Subject\Controllers\SubjectUpdateController;
 use App\Modules\Test\Test\Controllers\TestCreateController;
 use App\Modules\Test\Test\Controllers\TestDeleteController;
 use App\Modules\Test\Test\Controllers\TestPaginateController;
@@ -428,23 +432,23 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('/test')->group(function () {
-        Route::get('/', [TestPaginateController::class, 'get', 'as' => 'test.paginate.get'])->name('test.paginate.get');
-        Route::get('/create', [TestCreateController::class, 'get', 'as' => 'test.create.get'])->name('test.create.get');
-        Route::post('/create', [TestCreateController::class, 'post', 'as' => 'test.create.post'])->name('test.create.post');
-        Route::get('/update/{id}', [TestUpdateController::class, 'get', 'as' => 'test.update.get'])->name('test.update.get');
-        Route::post('/update/{id}', [TestUpdateController::class, 'post', 'as' => 'test.update.post'])->name('test.update.post');
-        Route::get('/delete/{id}', [TestDeleteController::class, 'get', 'as' => 'test.delete.get'])->name('test.delete.get');
+        Route::get('/', [TestPaginateController::class, 'get', 'as' => 'test.test.paginate.get'])->name('test.test.paginate.get');
+        Route::get('/create', [TestCreateController::class, 'get', 'as' => 'test.test.create.get'])->name('test.test.create.get');
+        Route::post('/create', [TestCreateController::class, 'post', 'as' => 'test.test.create.post'])->name('test.test.create.post');
+        Route::get('/update/{id}', [TestUpdateController::class, 'get', 'as' => 'test.test.update.get'])->name('test.test.update.get');
+        Route::post('/update/{id}', [TestUpdateController::class, 'post', 'as' => 'test.test.update.post'])->name('test.test.update.post');
+        Route::get('/delete/{id}', [TestDeleteController::class, 'get', 'as' => 'test.test.delete.get'])->name('test.test.delete.get');
 
-        // Route::prefix('/{test_id}')->group(function () {
-        //     Route::prefix('/specification')->group(function () {
-        //         Route::get('/', [SpecificationPaginateController::class, 'get', 'as' => 'test.specification.paginate.get'])->name('test.specification.paginate.get');
-        //         Route::get('/create', [SpecificationCreateController::class, 'get', 'as' => 'test.specification.create.get'])->name('test.specification.create.get');
-        //         Route::post('/create', [SpecificationCreateController::class, 'post', 'as' => 'test.specification.create.post'])->name('test.specification.create.post');
-        //         Route::get('/update/{id}', [SpecificationUpdateController::class, 'get', 'as' => 'test.specification.update.get'])->name('test.specification.update.get');
-        //         Route::post('/update/{id}', [SpecificationUpdateController::class, 'post', 'as' => 'test.specification.update.post'])->name('test.specification.update.post');
-        //         Route::get('/delete/{id}', [SpecificationDeleteController::class, 'get', 'as' => 'test.specification.delete.get'])->name('test.specification.delete.get');
-        //     });
-        // });
+        Route::prefix('/{test_id}')->group(function () {
+            Route::prefix('/subject')->group(function () {
+                Route::get('/', [SubjectPaginateController::class, 'get', 'as' => 'test.subject.paginate.get'])->name('test.subject.paginate.get');
+                Route::get('/create', [SubjectCreateController::class, 'get', 'as' => 'test.subject.create.get'])->name('test.subject.create.get');
+                Route::post('/create', [SubjectCreateController::class, 'post', 'as' => 'test.subject.create.post'])->name('test.subject.create.post');
+                Route::get('/update/{id}', [SubjectUpdateController::class, 'get', 'as' => 'test.subject.update.get'])->name('test.subject.update.get');
+                Route::post('/update/{id}', [SubjectUpdateController::class, 'post', 'as' => 'test.subject.update.post'])->name('test.subject.update.post');
+                Route::get('/delete/{id}', [SubjectDeleteController::class, 'get', 'as' => 'test.subject.delete.get'])->name('test.subject.delete.get');
+            });
+        });
     });
 
     Route::prefix('/campaign')->group(function () {
