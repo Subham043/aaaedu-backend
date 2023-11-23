@@ -52,6 +52,7 @@ use App\Modules\Seo\Controllers\UserSeoDetailController;
 use App\Modules\Settings\Controllers\General\UserGeneralController;
 use App\Modules\TeamMember\Management\Controllers\UserManagementAllController;
 use App\Modules\TeamMember\Staff\Controllers\UserStaffPaginateController;
+use App\Modules\Test\AnswerSheet\Controllers\UserTestApplyController;
 use App\Modules\Test\Test\Controllers\UserTestAllController;
 use App\Modules\Test\Test\Controllers\UserTestDetailController;
 use App\Modules\Test\Test\Controllers\UserTestPaginateController;
@@ -176,12 +177,6 @@ Route::prefix('event')->group(function () {
     Route::get('/{slug}', [UserEventDetailController::class, 'get'])->name('user.event.detail');
 });
 
-Route::prefix('test')->group(function () {
-    Route::get('/', [UserTestPaginateController::class, 'get'])->name('user.test.paginate');
-    Route::get('/all', [UserTestAllController::class, 'get'])->name('user.test.all');
-    Route::get('/{slug}', [UserTestDetailController::class, 'get'])->name('user.test.detail');
-});
-
 Route::prefix('campaign')->group(function () {
     Route::post('/enquiry/{campaign_id}', [EnquiryCreateController::class, 'post'])->name('user.campaign.enquiry.paginate');
     Route::get('/all', [UserCampaignAllController::class, 'get'])->name('user.campaign.all');
@@ -217,6 +212,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [UserProfileController::class, 'get', 'as' => 'profile.get'])->name('user.profile.get');
         Route::post('/update', [UserProfileController::class, 'post', 'as' => 'profile.post'])->name('user.profile.post');
         Route::post('/update-password', [UserPasswordUpdateController::class, 'post', 'as' => 'password.post'])->name('user.password.post');
+    });
+
+
+    Route::prefix('tests')->group(function () {
+        Route::get('/', [UserTestPaginateController::class, 'get'])->name('user.test.paginate');
+        Route::get('/all', [UserTestAllController::class, 'get'])->name('user.test.all');
+        Route::get('/{slug}', [UserTestDetailController::class, 'get'])->name('user.test.detail');
+        Route::prefix('{slug}')->group(function () {
+            Route::get('/apply', [UserTestApplyController::class, 'get'])->name('user.test.apply');
+        });
     });
 
     Route::get('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');
