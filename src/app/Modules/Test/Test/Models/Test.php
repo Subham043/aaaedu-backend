@@ -3,6 +3,7 @@
 namespace App\Modules\Test\Test\Models;
 
 use App\Modules\Authentication\Models\User;
+use App\Modules\Test\AnswerSheet\Models\TestTaken;
 use App\Modules\Test\Quiz\Models\Quiz;
 use App\Modules\Test\Subject\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -87,6 +88,11 @@ class Test extends Model implements Sitemapable
     public function quizes()
     {
         return $this->hasMany(Quiz::class, 'test_id');
+    }
+
+    public function test_taken()
+    {
+        return $this->hasOne(TestTaken::class, 'test_id')->where('user_id', auth()->user()->id);
     }
 
     public function getActivitylogOptions(): LogOptions

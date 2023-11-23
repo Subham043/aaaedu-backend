@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Modules\Test\AnsweSheet\Models;
+namespace App\Modules\Test\AnswerSheet\Models;
 
 use App\Enums\CorrectAnswer;
 use App\Enums\TestAttemptStatus;
+use App\Modules\Test\AnswerSheet\Models\TestTaken;
 use App\Modules\Test\Quiz\Models\Quiz;
-use App\Modules\Test\Test\Models\Test;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AnsweSheet extends Model
+class AnswerSheet extends Model
 {
     use HasFactory;
 
@@ -47,7 +47,7 @@ class AnsweSheet extends Model
 
     public function test_taken()
     {
-        return $this->belongsTo(Test::class, 'test_taken_id')->withDefault();
+        return $this->belongsTo(TestTaken::class, 'test_taken_id')->withDefault();
     }
 
     public function quiz()

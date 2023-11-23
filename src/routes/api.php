@@ -53,6 +53,7 @@ use App\Modules\Settings\Controllers\General\UserGeneralController;
 use App\Modules\TeamMember\Management\Controllers\UserManagementAllController;
 use App\Modules\TeamMember\Staff\Controllers\UserStaffPaginateController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestApplyController;
+use App\Modules\Test\AnswerSheet\Controllers\UserTestQuestionSetController;
 use App\Modules\Test\Test\Controllers\UserTestAllController;
 use App\Modules\Test\Test\Controllers\UserTestDetailController;
 use App\Modules\Test\Test\Controllers\UserTestPaginateController;
@@ -221,6 +222,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{slug}', [UserTestDetailController::class, 'get'])->name('user.test.detail');
         Route::prefix('{slug}')->group(function () {
             Route::get('/apply', [UserTestApplyController::class, 'get'])->name('user.test.apply');
+            Route::post('/apply/payment-verification', [UserTestApplyController::class, 'verify'])->name('user.test.apply.verify');
+            Route::get('/question-set', [UserTestQuestionSetController::class, 'get'])->name('user.test.question');
         });
     });
 

@@ -26,7 +26,7 @@ class TestService
 
     public function paginateMain(Int $total = 10): LengthAwarePaginator
     {
-        $query = Test::where('is_active', true);
+        $query = Test::with('test_taken')->where('is_active', true);
         return QueryBuilder::for($query)
                 ->defaultSort('id')
                 ->allowedSorts('id', 'name')
@@ -55,7 +55,7 @@ class TestService
 
     public function getBySlug(String $slug): Test|null
     {
-        return Test::where('slug', $slug)->where('is_active', true)->firstOrFail();
+        return Test::with('test_taken')->where('slug', $slug)->where('is_active', true)->firstOrFail();
     }
 
     public function create(array $data): Test

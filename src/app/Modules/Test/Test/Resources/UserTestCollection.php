@@ -2,6 +2,7 @@
 
 namespace App\Modules\Test\Test\Resources;
 
+use App\Modules\Test\AnswerSheet\Resources\UserTestEnrollmentCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserTestCollection extends JsonResource
@@ -31,6 +32,7 @@ class UserTestCollection extends JsonResource
             'meta_description' => $this->meta_description,
             'meta_keywords' => $this->meta_keywords,
             'meta_scripts' => $this->meta_scripts,
+            'is_test_enrolled' => !empty($this->test_taken) ? UserTestEnrollmentCollection::make($this->test_taken) : null,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
             'created' => $this->created_at->format('Y, d M'),

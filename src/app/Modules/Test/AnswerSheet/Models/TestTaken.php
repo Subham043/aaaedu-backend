@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Test\TestTaken\Models;
+namespace App\Modules\Test\AnswerSheet\Models;
 
 use App\Enums\TestStatus;
 use App\Enums\TestEnrollmentType;
