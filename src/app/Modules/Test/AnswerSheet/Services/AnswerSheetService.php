@@ -3,11 +3,14 @@
 namespace App\Modules\Test\AnswerSheet\Services;
 
 use App\Enums\PaymentStatus;
+use App\Enums\TestAttemptStatus;
 use App\Enums\TestEnrollmentType;
 use App\Enums\TestStatus;
 use App\Http\Services\RazorpayService;
 use App\Modules\Test\AnswerSheet\Models\TestTaken;
 use App\Modules\Test\AnswerSheet\Models\AnswerSheet;
+use App\Modules\Test\AnswerSheet\Requests\AnswerSheetRequest;
+use App\Modules\Test\AnswerSheet\Requests\EliminatedRequest;
 use App\Modules\Test\Quiz\Services\QuizService;
 use App\Modules\Test\Test\Models\Test;
 use Illuminate\Support\Str;
@@ -49,6 +52,33 @@ class AnswerSheetService
         ->where('user_id', auth()->user()->id)
         ->where('is_enrolled', true)
         ->firstOrFail();
+    }
+
+    public function fill_answer(AnswerSheetRequest $request, Test $test): void
+    {
+        $test_question = $this->test_question($test);
+        AnswerSheet::create([
+            'test_taken_id' => $test_question->id,
+            'quiz_id' => $test_question->current_quiz->id,
+            'correct_answer' => $test_question->current_quiz->correct_answer->value,
+            'marks_alloted' => empty($request->attempted_answer) ? 0 : ($request->attempted_answer==$test_question->current_quiz->correct_answer->value ? $test_question->current_quiz->mark : 0),
+            ...$request->all()
+        ]);
+    }
+
+    public function eliminated(EliminatedRequest $request, Test $test): void
+    {
+        $test_question = $this->test_question($test);
+        AnswerSheet::create([
+            'test_taken_id' => $test_question->id,
+            'quiz_id' => $test_question->current_quiz->id,
+            'marks_alloted' => 0,
+            'attempt_status' => TestAttemptStatus::ELIMINATED->value,
+            'reason' => $request->reason
+        ]);
+        $test_question->update([
+            ...$request->all()
+        ]);
     }
 
     public function current_question_count(int $test_taken_id): int

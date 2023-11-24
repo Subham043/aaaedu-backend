@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Modules\Test\Quiz\Requests;
+namespace App\Modules\Test\AnswerSheet\Requests;
 
 use App\Enums\CorrectAnswer;
-use App\Enums\Difficulty;
+use App\Enums\TestAttemptStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Validation\Rules\Enum;
+use Illuminate\Validation\Rule;
 
 
-class QuizRequest extends FormRequest
+class AnswerSheetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,21 +31,9 @@ class QuizRequest extends FormRequest
     public function rules()
     {
         return [
-            'question' => 'required|string',
-            'question_unfiltered' => 'required|string',
-            'answer_1' => 'required|string',
-            'answer_1_unfiltered' => 'required|string',
-            'answer_2' => 'required|string',
-            'answer_2_unfiltered' => 'required|string',
-            'answer_3' => 'required|string',
-            'answer_3_unfiltered' => 'required|string',
-            'answer_4' => 'required|string',
-            'answer_4_unfiltered' => 'required|string',
-            'duration' => 'required|numeric|gt:0',
-            'mark' => 'required|numeric|gt:0',
-            'difficulty' => ['required', new Enum(Difficulty::class)],
-            'correct_answer' => ['required', new Enum(CorrectAnswer::class)],
-            'subject_id' => 'required|numeric|exists:test_subjects,id',
+            'attempted_answer' => ['nullable', Rule::requiredIf(empty($this->attempt_status)), new Enum(CorrectAnswer::class)],
+            'attempt_status' => ['nullable', Rule::requiredIf(empty($this->attempted_answer)), new Enum(TestAttemptStatus::class)],
+            'reason' => ['nullable', Rule::requiredIf((empty($this->attempted_answer) && !empty($this->attempt_status)) && ($this->attempt_status==TestAttemptStatus::FAILED->value || $this->attempt_status==TestAttemptStatus::ELIMINATED->value))]
         ];
     }
 
@@ -58,6 +47,9 @@ class QuizRequest extends FormRequest
         $request = Purify::clean(
             $this->validated()
         );
+        if(!empty($request['attempted_answer'])){
+            $request['attempt_status'] = TestAttemptStatus::ATTEMPTED->value;
+        }
         $this->replace(
             [...$request]
         );
