@@ -56,6 +56,7 @@ use App\Modules\Test\AnswerSheet\Controllers\UserTestApplyController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestEliminatedController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestFillAnswerController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestQuestionSetController;
+use App\Modules\Test\AnswerSheet\Controllers\UserTestReportController;
 use App\Modules\Test\Test\Controllers\UserTestAllController;
 use App\Modules\Test\Test\Controllers\UserTestDetailController;
 use App\Modules\Test\Test\Controllers\UserTestPaginateController;
@@ -228,6 +229,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/question-set', [UserTestQuestionSetController::class, 'get'])->name('user.test.question');
             Route::post('/fill-answer', [UserTestFillAnswerController::class, 'post'])->name('user.test.answer');
             Route::post('/eliminated', [UserTestEliminatedController::class, 'post'])->name('user.test.eliminated');
+            Route::get('/report', [UserTestReportController::class, 'get'])->name('user.test.report');
         });
     });
 

@@ -25,7 +25,17 @@ class QuizService
 
     public function count_main_grouped_by_subjects(Int $test_id): int
     {
-        return Quiz::with(['test', 'subject'])->where('test_id', $test_id)->orderBy('subject_id', 'ASC')->count();
+        return Quiz::where('test_id', $test_id)->orderBy('subject_id', 'ASC')->count();
+    }
+
+    public function total_score_main(Int $test_id): int
+    {
+        return Quiz::where('test_id', $test_id)->orderBy('subject_id', 'ASC')->sum('mark');
+    }
+
+    public function total_score_main_grouped_by_subjects(Int $test_id): Collection
+    {
+        return Quiz::selectRaw('sum(mark), subject_id')->with('subject')->where('test_id', $test_id)->groupBy('subject_id')->get();
     }
 
     public function paginate(Int $total = 10, Int $test_id): LengthAwarePaginator

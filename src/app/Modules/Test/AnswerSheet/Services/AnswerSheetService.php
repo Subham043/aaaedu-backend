@@ -15,6 +15,7 @@ use App\Modules\Test\Quiz\Models\Quiz;
 use App\Modules\Test\Quiz\Services\QuizService;
 use App\Modules\Test\Test\Models\Test;
 use Error;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AnswerSheetService
@@ -62,7 +63,7 @@ class AnswerSheetService
         ->where('user_id', auth()->user()->id)
         ->where('is_enrolled', true)
         ->where(function($qry){
-            $qry->where('test_status', TestStatus::COMPLETED->value)->orWhere('test_status', TestStatus::ELIMINATED->value);
+            $qry->where('test_status', TestStatus::COMPLETED->value);
         })
         ->firstOrFail();
     }
@@ -169,6 +170,27 @@ class AnswerSheetService
             }
         }
         return null;
+    }
+
+    public function total_alloted_score(int $test_taken_id): Int
+    {
+        return AnswerSheet::where('test_taken_id', $test_taken_id)->sum('marks_alloted');
+    }
+
+    public function total_alloted_score_grouped_by_subjects(int $test_taken_id)
+    {
+        return DB::table('test_subjects')
+        ->selectRaw('COUNT(test_subjects.name) AS number_of_question, test_subjects.name, sum(test_quizs.mark) as total_mark_sum, sum(test_taken_answer_sheets.marks_alloted) as total_mark_alloted_sum, CAST(sum(case when test_taken_answer_sheets.attempt_status = "Failed To Answer" then 1 else 0 end) as UNSIGNED) as not_attempt_count, CAST(sum(case when test_taken_answer_sheets.attempt_status = "Attempted" then 1 else 0 end) as UNSIGNED) as attempt_count')
+        ->join('test_quizs','test_quizs.subject_id','=','test_subjects.id')
+        ->join('test_taken_answer_sheets','test_taken_answer_sheets.quiz_id','=','test_quizs.id')
+        ->where(['test_taken_answer_sheets.test_taken_id' => $test_taken_id])
+        ->groupBy(['test_subjects.name'])
+        ->get();
+    }
+
+    public function answer_count_main(int $test_taken_id): Int
+    {
+        return AnswerSheet::where('test_taken_id', $test_taken_id)->where('attempt_status', TestAttemptStatus::ATTEMPTED->value)->count();
     }
 
 }
