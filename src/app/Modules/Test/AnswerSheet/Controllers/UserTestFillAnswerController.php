@@ -20,9 +20,17 @@ class UserTestFillAnswerController extends Controller
 
     public function post(AnswerSheetRequest $request, $slug){
         $test = $this->testService->getBySlug($slug);
-        $this->answerSheetService->fill_answer($request, $test);
-        return response()->json([
-            'message' => 'Answer submitted successfully'
-        ], 200);
+        try {
+            //code...
+            $this->answerSheetService->fill_answer($request, $test);
+            return response()->json([
+                'message' => 'Answer submitted successfully'
+            ], 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'message' => 'Exam is over already!'
+            ], 400);
+        }
     }
 }

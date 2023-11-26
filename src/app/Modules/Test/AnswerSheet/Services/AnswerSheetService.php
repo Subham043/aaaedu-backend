@@ -11,8 +11,10 @@ use App\Modules\Test\AnswerSheet\Models\TestTaken;
 use App\Modules\Test\AnswerSheet\Models\AnswerSheet;
 use App\Modules\Test\AnswerSheet\Requests\AnswerSheetRequest;
 use App\Modules\Test\AnswerSheet\Requests\EliminatedRequest;
+use App\Modules\Test\Quiz\Models\Quiz;
 use App\Modules\Test\Quiz\Services\QuizService;
 use App\Modules\Test\Test\Models\Test;
+use Error;
 use Illuminate\Support\Str;
 
 class AnswerSheetService
@@ -54,31 +56,58 @@ class AnswerSheetService
         ->firstOrFail();
     }
 
+    public function test_report(Test $test): TestTaken
+    {
+        return TestTaken::where('test_id', $test->id)
+        ->where('user_id', auth()->user()->id)
+        ->where('is_enrolled', true)
+        ->where(function($qry){
+            $qry->where('test_status', TestStatus::COMPLETED->value)->orWhere('test_status', TestStatus::ELIMINATED->value);
+        })
+        ->firstOrFail();
+    }
+
     public function fill_answer(AnswerSheetRequest $request, Test $test): void
     {
         $test_question = $this->test_question($test);
-        AnswerSheet::create([
-            'test_taken_id' => $test_question->id,
-            'quiz_id' => $test_question->current_quiz->id,
-            'correct_answer' => $test_question->current_quiz->correct_answer->value,
-            'marks_alloted' => empty($request->attempted_answer) ? 0 : ($request->attempted_answer==$test_question->current_quiz->correct_answer->value ? $test_question->current_quiz->mark : 0),
-            ...$request->all()
-        ]);
+        if($test_question->test_status->value==TestStatus::ONGOING->value || $test_question->test_status->value==TestStatus::PENDING->value){
+            AnswerSheet::create([
+                'test_taken_id' => $test_question->id,
+                'quiz_id' => $test_question->current_quiz->id,
+                'correct_answer' => $test_question->current_quiz->correct_answer->value,
+                'marks_alloted' => empty($request->attempted_answer) ? 0 : ($request->attempted_answer==$test_question->current_quiz->correct_answer->value ? $test_question->current_quiz->mark : 0),
+                ...$request->all()
+            ]);
+            $next_question = $this->get_next_question($test, $test_question->current_quiz->id);
+            if(!empty($next_question)){
+                $test_question->current_quiz_id=$next_question->id;
+                $test_question->test_status=TestStatus::ONGOING->value;
+            }else{
+                $test_question->test_status=TestStatus::COMPLETED->value;
+            }
+            $test_question->save();
+            return;
+        }
+        throw new Error("Exam is over already!", 400);
     }
 
     public function eliminated(EliminatedRequest $request, Test $test): void
     {
         $test_question = $this->test_question($test);
-        AnswerSheet::create([
-            'test_taken_id' => $test_question->id,
-            'quiz_id' => $test_question->current_quiz->id,
-            'marks_alloted' => 0,
-            'attempt_status' => TestAttemptStatus::ELIMINATED->value,
-            'reason' => $request->reason
-        ]);
-        $test_question->update([
-            ...$request->all()
-        ]);
+        if($test_question->test_status->value==TestStatus::ONGOING->value || $test_question->test_status->value==TestStatus::PENDING->value){
+            AnswerSheet::create([
+                'test_taken_id' => $test_question->id,
+                'quiz_id' => $test_question->current_quiz->id,
+                'marks_alloted' => 0,
+                'attempt_status' => TestAttemptStatus::ELIMINATED->value,
+                'reason' => $request->reason
+            ]);
+            $test_question->update([
+                ...$request->all()
+            ]);
+            return;
+        }
+        throw new Error("Exam is over already!", 400);
     }
 
     public function current_question_count(int $test_taken_id): int
@@ -126,6 +155,20 @@ class AnswerSheetService
         $test_taken->is_enrolled = true;
         $test_taken->save();
         return $test_taken;
+    }
+
+    public function get_next_question(Test $test, Int $current_question_id): Quiz|null
+    {
+        $all_questions = ((new QuizService)->all_main_grouped_by_subjects($test->id));
+        foreach($all_questions as $k=>$v){
+            if($v->id==$current_question_id){
+                $index = $k+1;
+                if($index<count($all_questions)){
+                    return $all_questions[$index];
+                }
+            }
+        }
+        return null;
     }
 
 }

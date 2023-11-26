@@ -20,9 +20,17 @@ class UserTestEliminatedController extends Controller
 
     public function post(EliminatedRequest $request, $slug){
         $test = $this->testService->getBySlug($slug);
-        $this->answerSheetService->eliminated($request, $test);
-        return response()->json([
-            'message' => 'Eliminated successfully'
-        ], 200);
+        try {
+            //code...
+            $this->answerSheetService->eliminated($request, $test);
+            return response()->json([
+                'message' => 'Eliminated successfully'
+            ], 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'message' => 'Exam is over already!'
+            ], 400);
+        }
     }
 }
