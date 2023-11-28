@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Test\AnswerSheet\Resources\UserTestQuestionSetCollection;
 use App\Modules\Test\AnswerSheet\Services\AnswerSheetService;
 use App\Modules\Test\Quiz\Services\QuizService;
+use App\Modules\Test\Test\Resources\UserTestCollection;
 use App\Modules\Test\Test\Services\TestService;
 
 class UserTestQuestionSetController extends Controller
@@ -27,6 +28,7 @@ class UserTestQuestionSetController extends Controller
         $total_question_count = $this->quizService->count_main_grouped_by_subjects($test->id);
         $current_question_count = $this->answerSheetService->current_question_count($test_question->id);
         return response()->json([
+            'test' => UserTestCollection::make($test),
             'question_set' => UserTestQuestionSetCollection::make($test_question),
             'total_question_count' => $total_question_count,
             'current_question_count' => $current_question_count,
