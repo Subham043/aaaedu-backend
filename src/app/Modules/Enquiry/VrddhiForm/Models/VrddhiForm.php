@@ -4,6 +4,7 @@ namespace App\Modules\Enquiry\VrddhiForm\Models;
 
 use App\Enums\VrddhiClassEnum;
 use App\Enums\VrddhiSyllabusEnum;
+use App\Modules\Enquiry\VrddhiForm\Jobs\VrddhiFormEmailJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -47,6 +48,14 @@ class VrddhiForm extends Model
         'class' => VrddhiClassEnum::EIGHT,
         'syllabus' => VrddhiSyllabusEnum::ICSE,
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($data) {
+            dispatch(new VrddhiFormEmailJob($data));
+        });
+    }
 
     public $image_path = 'vrddhis';
 

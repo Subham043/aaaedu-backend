@@ -4,6 +4,7 @@ namespace App\Modules\Enquiry\SubscriptionForm\Models;
 
 use App\Enums\Branch;
 use App\Enums\RequestType;
+use App\Modules\Enquiry\SubscriptionForm\Jobs\SubscriptionFormEmailJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -29,6 +30,14 @@ class SubscriptionForm extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($data) {
+            dispatch(new SubscriptionFormEmailJob($data));
+        });
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

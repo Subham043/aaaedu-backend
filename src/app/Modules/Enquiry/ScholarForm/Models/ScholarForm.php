@@ -4,6 +4,7 @@ namespace App\Modules\Enquiry\ScholarForm\Models;
 
 use App\Enums\ScholarCourse;
 use App\Enums\ScholarBranch;
+use App\Modules\Enquiry\ScholarForm\Jobs\ScholarFormEmailJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -39,6 +40,14 @@ class ScholarForm extends Model
         'course' => ScholarCourse::SCHOLAR,
         'branch' => ScholarBranch::VIJAYNAGAR_SCHOLAR,
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($data) {
+            dispatch(new ScholarFormEmailJob($data));
+        });
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

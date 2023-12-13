@@ -4,6 +4,7 @@ namespace App\Modules\Enquiry\CourseRequestForm\Models;
 
 use App\Modules\Course\Branch\Models\Branch;
 use App\Modules\Course\Course\Models\Course;
+use App\Modules\Enquiry\CourseRequestForm\Jobs\CourseRequestFormEmailJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -32,6 +33,14 @@ class CourseRequestForm extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($data) {
+            dispatch(new CourseRequestFormEmailJob($data));
+        });
+    }
 
     public function course()
     {

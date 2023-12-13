@@ -54,7 +54,6 @@ class ContactForm extends Model
         parent::boot();
         self::created(function ($data) {
             dispatch(new ContactFormEmailJob($data));
-            // dispatch(new SendAdminEnquiryEmailJob($details));
         });
     }
 
