@@ -4,6 +4,7 @@ namespace App\Modules\Enquiry\ContactForm\Models;
 
 use App\Enums\Branch;
 use App\Enums\RequestType;
+use App\Modules\Enquiry\ContactForm\Jobs\ContactFormEmailJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -47,6 +48,15 @@ class ContactForm extends Model
         'request_type' => RequestType::CALL_BACK,
         'branch' => Branch::VIJAYNAGAR,
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($data) {
+            dispatch(new ContactFormEmailJob($data));
+            // dispatch(new SendAdminEnquiryEmailJob($details));
+        });
+    }
 
     public function getActivitylogOptions(): LogOptions
     {
