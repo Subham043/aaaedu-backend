@@ -7,6 +7,7 @@ use App\Http\Services\RateLimitService;
 use App\Http\Services\RazorpayService;
 use App\Modules\Course\Branch\Services\BranchService;
 use App\Modules\Course\Course\Services\CourseService;
+use App\Modules\Enquiry\EnrollmentForm\Jobs\EnrollmentFormEmailJob;
 use App\Modules\Enquiry\EnrollmentForm\Requests\EnrollmentFormRequest;
 use App\Modules\Enquiry\EnrollmentForm\Requests\VerifyPaymentRequest;
 use App\Modules\Enquiry\EnrollmentForm\Resources\EnrollmentFormCollection;
@@ -63,7 +64,7 @@ class EnrollmentFormCreateController extends Controller
         try {
             //code...
             $data = $this->enrollmentFormService->verify_payment($request->validated());
-
+            dispatch(new EnrollmentFormEmailJob($data));
             return response()->json([
                 'message' => "Payment & Enrollment done successfully.",
                 'enrollmentForm' => EnrollmentFormCollection::make($data),
