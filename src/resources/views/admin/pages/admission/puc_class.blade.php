@@ -8,14 +8,14 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        @include('admin.includes.breadcrumb', ['page'=>'Admission - Class 8, 9, 10', 'page_link'=>route('admission.not_puc.paginate.get'), 'list'=>['List']])
+        @include('admin.includes.breadcrumb', ['page'=>'Admission - Class 11 or 1st PUC', 'page_link'=>route('admission.not_puc.paginate.get'), 'list'=>['List']])
         <!-- end page title -->
 
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Admission - Class 8, 9, 10</h4>
+                        <h4 class="card-title mb-0">Admission - Class 11 or 1st PUC</h4>
                     </div><!-- end card header -->
 
                     <div class="card-body">

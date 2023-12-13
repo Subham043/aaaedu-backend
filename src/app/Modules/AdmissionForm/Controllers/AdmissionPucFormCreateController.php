@@ -5,6 +5,7 @@ namespace App\Modules\AdmissionForm\Controllers;
 use App\Enums\AdmissionEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Services\RateLimitService;
+use App\Modules\AdmissionForm\Jobs\PucFormEmailJob;
 use App\Modules\AdmissionForm\Requests\AdmissionPucFormRequest;
 use App\Modules\AdmissionForm\Resources\AdmissionFormCollection;
 use App\Modules\AdmissionForm\Services\AdmissionFormService;
@@ -32,6 +33,7 @@ class AdmissionPucFormCreateController extends Controller
                 $this->admissionFormService->saveImage($admissionForm);
             }
             (new RateLimitService($request))->clearRateLimit();
+            dispatch(new PucFormEmailJob($admissionForm));
 
             return response()->json([
                 'message' => "Admission created successfully.",

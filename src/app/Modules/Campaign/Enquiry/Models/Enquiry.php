@@ -3,6 +3,7 @@
 namespace App\Modules\Campaign\Enquiry\Models;
 
 use App\Modules\Campaign\Campaign\Models\Campaign;
+use App\Modules\Campaign\Enquiry\Jobs\CampaignFormEmailJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -30,6 +31,14 @@ class Enquiry extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($data) {
+            dispatch(new CampaignFormEmailJob($data));
+        });
+    }
 
     public function campaign()
     {

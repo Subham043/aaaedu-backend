@@ -2,7 +2,8 @@
 
 namespace App\Modules\Blog\Comment\Models;
 
-use App\Modules\Event\Event\Models\Event;
+use App\Modules\Blog\Comment\Jobs\BlogCommentEmailJob;
+use App\Modules\Blog\Models\Blog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -34,9 +35,17 @@ class Comment extends Model
         'is_approved' => 'boolean',
     ];
 
-    public function event()
+    public static function boot()
     {
-        return $this->belongsTo(Event::class, 'event_id')->withDefault();
+        parent::boot();
+        self::created(function ($data) {
+            dispatch(new BlogCommentEmailJob($data));
+        });
+    }
+
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class, 'blog_id')->withDefault();
     }
 
     public function getActivitylogOptions(): LogOptions
