@@ -30,7 +30,7 @@
                                         @include('admin.includes.input', ['key'=>'counter', 'label'=>'Counter', 'value'=>$data->counter])
                                     </div>
                                     <div class="col-xxl-4 col-md-4">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (512 x 512)'])
                                         @if(!empty($data->image_link))
                                             <img src="{{$data->image_link}}" alt="" class="img-preview">
                                         @endif

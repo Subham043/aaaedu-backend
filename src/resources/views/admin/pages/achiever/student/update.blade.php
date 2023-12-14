@@ -36,7 +36,7 @@
                                         @include('admin.includes.select_multiple', ['key'=>'category', 'label'=>'Categories'])
                                     </div>
                                     <div class="col-xxl-4 col-md-4">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (177 x 199)'])
                                         @if(!empty($data->image_link))
                                             <img src="{{$data->image_link}}" alt="" class="img-preview">
                                         @endif

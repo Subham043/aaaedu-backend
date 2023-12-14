@@ -62,7 +62,7 @@
                             <div class="live-preview">
                                 <div class="row gy-4" id="image_row">
                                     <div class="col-xxl-4 col-md-4">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (568 x 758)'])
                                     </div>
                                     <div class="col-xxl-4 col-md-4">
                                         @include('admin.includes.input', ['key'=>'image_alt', 'label'=>'Image Alt', 'value'=>old('image_alt')])

@@ -27,7 +27,7 @@
                                         @include('admin.includes.input', ['key'=>'title', 'label'=>'Title', 'value'=>old('title')])
                                     </div>
                                     <div class="col-xxl-3 col-md-3">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (400 x 260)'])
                                     </div>
                                     <div class="col-xxl-3 col-md-3">
                                         @include('admin.includes.input', ['key'=>'image_title', 'label'=>'Image Title', 'value'=>old('image_title')])

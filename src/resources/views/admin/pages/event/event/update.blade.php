@@ -68,7 +68,7 @@
                             <div class="live-preview">
                                 <div class="row gy-4" id="image_row">
                                     <div class="col-xxl-4 col-md-4">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (1429 x 600)'])
                                         @if(!empty($data->image_link))
                                             <img src="{{$data->image_link}}" alt="" class="img-preview">
                                         @endif

@@ -30,7 +30,7 @@
                                         @include('admin.includes.input', ['key'=>'counter', 'label'=>'Counter', 'value'=>old('counter')])
                                     </div>
                                     <div class="col-xxl-4 col-md-4">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (512 x 512)'])
                                     </div>
                                     <div class="col-xxl-4 col-md-4">
                                         @include('admin.includes.input', ['key'=>'image_title', 'label'=>'Image Title', 'value'=>old('image_title')])

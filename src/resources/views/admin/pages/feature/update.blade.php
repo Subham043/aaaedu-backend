@@ -27,7 +27,7 @@
                                         @include('admin.includes.input', ['key'=>'title', 'label'=>'Title', 'value'=>$data->title])
                                     </div>
                                     <div class="col-xxl-6 col-md-6">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (512 x 512)'])
                                         @if(!empty($data->image_link))
                                             <img src="{{$data->image_link}}" alt="" class="img-preview">
                                         @endif

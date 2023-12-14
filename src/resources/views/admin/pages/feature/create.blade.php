@@ -27,7 +27,7 @@
                                         @include('admin.includes.input', ['key'=>'title', 'label'=>'Title', 'value'=>old('title')])
                                     </div>
                                     <div class="col-xxl-6 col-md-6">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (512 x 512)'])
                                     </div>
                                     <div class="col-xxl-12 col-md-12">
                                         @include('admin.includes.textarea', ['key'=>'description', 'label'=>'Description', 'value'=>old('description')])

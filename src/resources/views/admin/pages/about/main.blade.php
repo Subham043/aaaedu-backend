@@ -45,10 +45,7 @@
                             <div class="live-preview">
                                 <div class="row gy-4" id="image_row">
                                     <div class="col-xxl-4 col-md-4">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
-                                        <p>
-                                            <code>Note: </code> Banner Size : 350 x 450
-                                        </p>
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image (781 x 758)'])
                                         @if(!empty($data->image_link))
                                             <img src="{{$data->image_link}}" alt="" class="img-preview">
                                         @endif
@@ -75,7 +72,7 @@
                             <div class="live-preview">
                                 <div class="row gy-4" id="image_row">
                                     <div class="col-xxl-4 col-md-4">
-                                        @include('admin.includes.file_input', ['key'=>'counter_image', 'label'=>'Image'])
+                                        @include('admin.includes.file_input', ['key'=>'counter_image', 'label'=>'Image (512 x 512)'])
                                         @if(!empty($data->counter_image_link))
                                             <img src="{{$data->counter_image_link}}" alt="" class="img-preview">
                                         @endif
