@@ -3,6 +3,7 @@
 namespace App\Modules\Test\AnswerSheet\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Test\AnswerSheet\Jobs\TestApplyEmailJob;
 use App\Modules\Test\AnswerSheet\Requests\VerifyPaymentRequest;
 use App\Modules\Test\AnswerSheet\Resources\UserTestEnrollmentCollection;
 use App\Modules\Test\AnswerSheet\Services\AnswerSheetService;
@@ -24,6 +25,7 @@ class UserTestApplyController extends Controller
         $check_test_eligibility = $this->answerSheetService->check_test_eligibility($test);
         if($check_test_eligibility['is_eligible'] && $check_test_eligibility['type']=='NEW'){
             $apply_test = $this->answerSheetService->apply_test($test);
+            dispatch(new TestApplyEmailJob($apply_test));
             return response()->json([
                 'message' => "Test applied successfully.",
                 'test_enrollment' => UserTestEnrollmentCollection::make($apply_test),
@@ -46,7 +48,7 @@ class UserTestApplyController extends Controller
         try {
             //code...
             $data = $this->answerSheetService->verify_payment($request->validated());
-
+            dispatch(new TestApplyEmailJob($data));
             return response()->json([
                 'message' => "Payment & Test Enrollment done successfully.",
                 'enrollmentForm' => UserTestEnrollmentCollection::make($data),
