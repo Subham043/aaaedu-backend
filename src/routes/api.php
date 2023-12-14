@@ -210,6 +210,13 @@ Route::prefix('seo')->group(function () {
     Route::get('/{slug}', [UserSeoDetailController::class, 'get'])->name('user.seo.detail');
 });
 
+Route::prefix('tests')->group(function () {
+    Route::get('/', [UserTestPaginateController::class, 'get'])->name('user.test.paginate');
+    Route::middleware(['auth:sanctum'])->get('/main-paginate', [UserTestPaginateController::class, 'get'])->name('user.test.paginate.main');
+    Route::get('/all', [UserTestAllController::class, 'get'])->name('user.test.all');
+    Route::get('/{slug}', [UserTestDetailController::class, 'get'])->name('user.test.detail');
+});
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('profile')->group(function () {
@@ -220,10 +227,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     Route::prefix('tests')->group(function () {
-        Route::get('/', [UserTestPaginateController::class, 'get'])->name('user.test.paginate');
-        Route::get('/all', [UserTestAllController::class, 'get'])->name('user.test.all');
-        Route::get('/{slug}', [UserTestDetailController::class, 'get'])->name('user.test.detail');
         Route::prefix('{slug}')->group(function () {
+            Route::get('/main-detail', [UserTestDetailController::class, 'get'])->name('user.test.detail.main');
             Route::get('/apply', [UserTestApplyController::class, 'get'])->name('user.test.apply');
             Route::post('/apply/payment-verification', [UserTestApplyController::class, 'verify'])->name('user.test.apply.verify');
             Route::get('/question-set', [UserTestQuestionSetController::class, 'get'])->name('user.test.question');

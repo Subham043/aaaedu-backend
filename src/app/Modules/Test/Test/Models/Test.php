@@ -92,7 +92,7 @@ class Test extends Model implements Sitemapable
 
     public function test_taken()
     {
-        return $this->hasOne(TestTaken::class, 'test_id')->where('user_id', auth()->user()->id);
+        return $this->hasOne(TestTaken::class, 'test_id')->where('user_id', auth()->check() ? auth()->user()->id : null);
     }
 
     public function getActivitylogOptions(): LogOptions
