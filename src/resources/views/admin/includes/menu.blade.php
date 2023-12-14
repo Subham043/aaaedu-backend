@@ -163,9 +163,21 @@
 
                             @can('list tests')
                             <li class="nav-item">
-                                <a class="nav-link menu-link {{strpos(url()->current(),route('test.test.paginate.get')) !== false ? 'active' : ''}}" href="{{route('test.test.paginate.get')}}">
-                                    <i class="ri-a-b"></i> <span data-key="t-widgets">Tests</span>
+                                <a class="nav-link menu-link {{strpos(url()->current(),'test') !== false ? 'active' : ''}}" href="#sidebarDashboards3" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="{{strpos(url()->current(),'test') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards3">
+                                    <i class="ri-a-b"></i> <span data-key="t-dashboards">Tests</span>
                                 </a>
+                                <div class="collapse menu-dropdown {{strpos(url()->current(),'test') !== false ? 'show' : ''}}" id="sidebarDashboards3">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{route('test.test.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('test.test.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Test </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{route('test.taken.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('test.taken.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Taken </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </li>
                             @endcan
 

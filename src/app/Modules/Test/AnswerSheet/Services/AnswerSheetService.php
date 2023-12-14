@@ -17,6 +17,11 @@ use App\Modules\Test\Test\Models\Test;
 use Error;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class AnswerSheetService
 {
@@ -193,4 +198,61 @@ class AnswerSheetService
         return AnswerSheet::where('test_taken_id', $test_taken_id)->where('attempt_status', TestAttemptStatus::ATTEMPTED->value)->count();
     }
 
+    public function paginate(Int $total = 10): LengthAwarePaginator
+    {
+        $query = TestTaken::with([
+            'test',
+            'user',
+            'current_quiz'
+        ])->where('is_enrolled', true)->latest();
+        return QueryBuilder::for($query)
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
+    public function getById(Int $id): TestTaken|null
+    {
+        return TestTaken::where('is_enrolled', true)->findOrFail($id);
+    }
+
+    public function admin_report(Int $id): TestTaken
+    {
+        return TestTaken::with([
+            'test',
+            'user',
+        ])->where('id', $id)
+        ->where('is_enrolled', true)
+        ->where('test_status', TestStatus::COMPLETED->value)
+        ->firstOrFail();
+    }
+
+    public function admin_report_quiz(Int $id): LengthAwarePaginator
+    {
+        $query = AnswerSheet::with([
+            'quiz'
+        ])->where('test_taken_id', $id)->latest();
+        return QueryBuilder::for($query)
+                ->paginate(1)
+                ->appends(request()->query());
+    }
+
+    public function delete(TestTaken $event): bool|null
+    {
+        return $event->delete();
+    }
+}
+
+class CommonFilter implements Filter
+{
+    public function __invoke(Builder $query, $value, string $property)
+    {
+        $query->where('enrollment_type', 'LIKE', '%' . $value . '%')
+        ->orWhere('test_status', 'LIKE', '%' . $value . '%')
+        ->orWhere('razorpay_order_id', 'LIKE', '%' . $value . '%')
+        ->orWhere('razorpay_payment_id', 'LIKE', '%' . $value . '%')
+        ->orWhere('amount', 'LIKE', '%' . $value . '%');
+    }
 }

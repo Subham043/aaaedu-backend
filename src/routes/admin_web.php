@@ -127,6 +127,9 @@ use App\Modules\TeamMember\Staff\Controllers\StaffCreateController;
 use App\Modules\TeamMember\Staff\Controllers\StaffDeleteController;
 use App\Modules\TeamMember\Staff\Controllers\StaffPaginateController;
 use App\Modules\TeamMember\Staff\Controllers\StaffUpdateController;
+use App\Modules\Test\AnswerSheet\Controllers\TestTakenDeleteController;
+use App\Modules\Test\AnswerSheet\Controllers\TestTakenPaginateController;
+use App\Modules\Test\AnswerSheet\Controllers\TestTakenReportController;
 use App\Modules\Test\Quiz\Controllers\QuizCreateController;
 use App\Modules\Test\Quiz\Controllers\QuizDeleteController;
 use App\Modules\Test\Quiz\Controllers\QuizPaginateController;
@@ -442,6 +445,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [TestUpdateController::class, 'get', 'as' => 'test.test.update.get'])->name('test.test.update.get');
         Route::post('/update/{id}', [TestUpdateController::class, 'post', 'as' => 'test.test.update.post'])->name('test.test.update.post');
         Route::get('/delete/{id}', [TestDeleteController::class, 'get', 'as' => 'test.test.delete.get'])->name('test.test.delete.get');
+
+        Route::prefix('/taken')->group(function () {
+            Route::get('/', [TestTakenPaginateController::class, 'get', 'as' => 'test.taken.paginate.get'])->name('test.taken.paginate.get');
+            Route::get('/report/{id}', [TestTakenReportController::class, 'get', 'as' => 'test.taken.report.get'])->name('test.taken.report.get');
+            Route::get('/delete/{id}', [TestTakenDeleteController::class, 'get', 'as' => 'test.taken.delete.get'])->name('test.taken.delete.get');
+        });
 
         Route::prefix('/{test_id}')->group(function () {
             Route::prefix('/subject')->group(function () {
