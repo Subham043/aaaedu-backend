@@ -21,6 +21,7 @@ use App\Modules\Authentication\Controllers\LogoutController;
 use App\Modules\Authentication\Controllers\ProfileController;
 use App\Modules\Authentication\Controllers\ResetPasswordController;
 use App\Modules\Blog\Comment\Controllers\BlogCommentDeleteController;
+use App\Modules\Blog\Comment\Controllers\BlogCommentMainPaginateController;
 use App\Modules\Blog\Comment\Controllers\BlogCommentPaginateController;
 use App\Modules\Blog\Comment\Controllers\BlogCommentStatusController;
 use App\Modules\Dashboard\Controllers\DashboardController;
@@ -38,6 +39,8 @@ use App\Modules\Campaign\Campaign\Controllers\CampaignDeleteController;
 use App\Modules\Campaign\Campaign\Controllers\CampaignPaginateController;
 use App\Modules\Campaign\Campaign\Controllers\CampaignUpdateController;
 use App\Modules\Campaign\Enquiry\Controllers\EnquiryDeleteController;
+use App\Modules\Campaign\Enquiry\Controllers\EnquiryMainExcelController;
+use App\Modules\Campaign\Enquiry\Controllers\EnquiryMainPaginateController;
 use App\Modules\Campaign\Enquiry\Controllers\EnquiryPaginateController;
 use App\Modules\Counter\Controllers\CounterCreateController;
 use App\Modules\Counter\Controllers\CounterDeleteController;
@@ -263,6 +266,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/blog')->group(function () {
         Route::get('/', [BlogPaginateController::class, 'get', 'as' => 'blog.paginate.get'])->name('blog.paginate.get');
+        Route::get('/comments-list', [BlogCommentMainPaginateController::class, 'get', 'as' => 'blog.comment.main_paginate.get'])->name('blog.comment.main_paginate.get');
         Route::get('/create', [BlogCreateController::class, 'get', 'as' => 'blog.create.get'])->name('blog.create.get');
         Route::post('/create', [BlogCreateController::class, 'post', 'as' => 'blog.create.post'])->name('blog.create.post');
         Route::get('/update/{id}', [BlogUpdateController::class, 'get', 'as' => 'blog.update.get'])->name('blog.update.get');
@@ -474,6 +478,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/campaign')->group(function () {
         Route::get('/', [CampaignPaginateController::class, 'get', 'as' => 'campaign.campaign.paginate.get'])->name('campaign.campaign.paginate.get');
+        Route::get('/enquiry-list', [EnquiryMainPaginateController::class, 'get', 'as' => 'campaign.enquiry.main_paginate.get'])->name('campaign.enquiry.main_paginate.get');
+        Route::get('/enquiry-excel', [EnquiryMainExcelController::class, 'get', 'as' => 'campaign.enquiry.excel.get'])->name('campaign.enquiry.excel.get');
         Route::get('/create', [CampaignCreateController::class, 'get', 'as' => 'campaign.campaign.create.get'])->name('campaign.campaign.create.get');
         Route::post('/create', [CampaignCreateController::class, 'post', 'as' => 'campaign.campaign.create.post'])->name('campaign.campaign.create.post');
         Route::get('/update/{id}', [CampaignUpdateController::class, 'get', 'as' => 'campaign.campaign.update.get'])->name('campaign.campaign.update.get');

@@ -29,6 +29,17 @@ class CommentService
                 ->appends(request()->query());
     }
 
+    public function admin_main_paginate(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Comment::with('blog')->wherehas('blog')->latest();
+        return QueryBuilder::for($query)
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new MainCommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function paginateMain(Int $total = 10, Int $blog_id): LengthAwarePaginator
     {
         $query = Comment::where('blog_id', $blog_id)->where('is_approved', true)->latest();
@@ -80,5 +91,17 @@ class CommonFilter implements Filter
         $query->where('name', 'LIKE', '%' . $value . '%')
         ->orWhere('email', 'LIKE', '%' . $value . '%')
         ->orWhere('comment', 'LIKE', '%' . $value . '%');
+    }
+}
+
+class MainCommonFilter implements Filter
+{
+    public function __invoke(Builder $query, $value, string $property)
+    {
+        $query->where(function($q) use($value){
+            $q->where('name', 'LIKE', '%' . $value . '%')
+            ->orWhere('email', 'LIKE', '%' . $value . '%')
+            ->orWhere('comment', 'LIKE', '%' . $value . '%');
+        });
     }
 }

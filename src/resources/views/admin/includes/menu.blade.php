@@ -139,9 +139,26 @@
 
                             @can('list blogs')
                             <li class="nav-item">
-                                <a class="nav-link menu-link {{strpos(url()->current(),route('blog.paginate.get')) !== false ? 'active' : ''}}" href="{{route('blog.paginate.get')}}">
-                                    <i class="ri-article-line"></i> <span data-key="t-widgets">Blogs</span>
+                                <a class="nav-link menu-link {{strpos(url()->current(),'blog') !== false ? 'active' : ''}}" href="#sidebarDashboards12" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="{{strpos(url()->current(),'blog') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards12">
+                                    <i class="ri-article-line"></i> <span data-key="t-dashboards">Blogs</span>
                                 </a>
+                                <div class="collapse menu-dropdown {{strpos(url()->current(),'blog') !== false ? 'show' : ''}}" id="sidebarDashboards12">
+                                    <ul class="nav nav-sm flex-column">
+                                        @can('list team member managements')
+                                            <li class="nav-item">
+                                                <a href="{{route('blog.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('blog.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Blogs </a>
+                                            </li>
+                                        @endcan
+
+                                        @can('list team member staffs')
+                                            <li class="nav-item">
+                                                <a href="{{route('blog.comment.main_paginate.get')}}" class="nav-link {{strpos(url()->current(), route('blog.comment.main_paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Comments </a>
+                                            </li>
+                                        @endcan
+
+                                    </ul>
+                                </div>
                             </li>
                             @endcan
 
@@ -199,9 +216,26 @@
 
                             @can('list campaigns')
                             <li class="nav-item">
-                                <a class="nav-link menu-link {{strpos(url()->current(),route('campaign.campaign.paginate.get')) !== false ? 'active' : ''}}" href="{{route('campaign.campaign.paginate.get')}}">
-                                    <i class="ri-mail-volume-line"></i> <span data-key="t-widgets">Campaign</span>
+                                <a class="nav-link menu-link {{strpos(url()->current(),'campaign') !== false ? 'active' : ''}}" href="#sidebarDashboards11" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="{{strpos(url()->current(),'campaign') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards11">
+                                    <i class="ri-mail-volume-line"></i> <span data-key="t-dashboards">Campaigns</span>
                                 </a>
+                                <div class="collapse menu-dropdown {{strpos(url()->current(),'campaign') !== false ? 'show' : ''}}" id="sidebarDashboards11">
+                                    <ul class="nav nav-sm flex-column">
+                                        @can('list team member managements')
+                                            <li class="nav-item">
+                                                <a href="{{route('campaign.campaign.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('campaign.campaign.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Campaigns </a>
+                                            </li>
+                                        @endcan
+
+                                        @can('list team member staffs')
+                                            <li class="nav-item">
+                                                <a href="{{route('campaign.enquiry.main_paginate.get')}}" class="nav-link {{strpos(url()->current(), route('campaign.enquiry.main_paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Enquiry </a>
+                                            </li>
+                                        @endcan
+
+                                    </ul>
+                                </div>
                             </li>
                             @endcan
 

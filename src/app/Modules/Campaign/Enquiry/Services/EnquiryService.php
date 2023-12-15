@@ -29,6 +29,17 @@ class EnquiryService
                 ->appends(request()->query());
     }
 
+    public function admin_main_paginate(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Enquiry::with('campaign')->whereHas('campaign')->latest();
+        return QueryBuilder::for($query)
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new CampaignCommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function getById(Int $id): Enquiry|null
     {
         return Enquiry::with('campaign')->findOrFail($id);
@@ -65,5 +76,17 @@ class CommonFilter implements Filter
         $query->where('name', 'LIKE', '%' . $value . '%')
         ->orWhere('phone', 'LIKE', '%' . $value . '%')
         ->orWhere('email', 'LIKE', '%' . $value . '%');
+    }
+}
+
+class CampaignCommonFilter implements Filter
+{
+    public function __invoke(Builder $query, $value, string $property)
+    {
+        $query->where(function($q) use($value){
+            $q->where('name', 'LIKE', '%' . $value . '%')
+            ->orWhere('phone', 'LIKE', '%' . $value . '%')
+            ->orWhere('email', 'LIKE', '%' . $value . '%');
+        });
     }
 }
