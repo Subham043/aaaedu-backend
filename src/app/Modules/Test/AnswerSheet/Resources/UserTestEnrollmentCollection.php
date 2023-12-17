@@ -19,6 +19,7 @@ class UserTestEnrollmentCollection extends JsonResource
             'uuid' => $this->uuid,
             'test_id' => $this->test_id,
             'current_quiz_id' => $this->current_quiz_id,
+            'current_question_id' => $this->current_question_id,
             'user_id' => $this->user_id,
             'is_enrolled' => $this->is_enrolled,
             'enrollment_type' => $this->enrollment_type,

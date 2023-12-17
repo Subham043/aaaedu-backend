@@ -6,6 +6,7 @@ use App\Enums\TestStatus;
 use App\Enums\TestEnrollmentType;
 use App\Enums\PaymentStatus;
 use App\Modules\Authentication\Models\User;
+use App\Modules\Test\Questionarie\Models\Questionarie;
 use App\Modules\Test\Quiz\Models\Quiz;
 use App\Modules\Test\Test\Models\Test;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,7 @@ class TestTaken extends Model
         'uuid',
         'test_id',
         'current_quiz_id',
+        'current_question_id',
         'user_id',
         'is_enrolled',
         'enrollment_type',
@@ -70,6 +72,11 @@ class TestTaken extends Model
     public function current_quiz()
     {
         return $this->belongsTo(Quiz::class, 'current_quiz_id')->withDefault();
+    }
+
+    public function current_question()
+    {
+        return $this->belongsTo(Questionarie::class, 'current_question_id')->withDefault();
     }
 
     public function user()

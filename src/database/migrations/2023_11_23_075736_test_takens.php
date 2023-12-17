@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('uuid', 500)->unique()->nullable();
             $table->foreignId('test_id')->nullable()->constrained('tests')->nullOnDelete();
             $table->foreignId('current_quiz_id')->nullable()->constrained('test_quizs')->nullOnDelete();
+            $table->foreignId('current_question_id')->nullable()->constrained('test_quiz_questionaries')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->boolean('is_enrolled')->default(0);
             $table->string('enrollment_type', 500)->default(TestEnrollmentType::FREE->value)->nullable();

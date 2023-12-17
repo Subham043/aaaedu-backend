@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('test_taken_id')->nullable()->constrained('test_takens')->nullOnDelete();
             $table->foreignId('quiz_id')->nullable()->constrained('test_quizs')->nullOnDelete();
+            $table->foreignId('question_id')->nullable()->constrained('test_quiz_questionaries')->nullOnDelete();
             $table->string('correct_answer', 500)->default(CorrectAnswer::Answer1->value)->nullable();
             $table->string('attempted_answer', 500)->default(CorrectAnswer::Answer1->value)->nullable();
             $table->string('marks_alloted', 500)->nullable();

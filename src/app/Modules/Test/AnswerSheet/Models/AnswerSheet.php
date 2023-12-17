@@ -5,6 +5,7 @@ namespace App\Modules\Test\AnswerSheet\Models;
 use App\Enums\CorrectAnswer;
 use App\Enums\TestAttemptStatus;
 use App\Modules\Test\AnswerSheet\Models\TestTaken;
+use App\Modules\Test\Questionarie\Models\Questionarie;
 use App\Modules\Test\Quiz\Models\Quiz;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,7 @@ class AnswerSheet extends Model
     protected $fillable = [
         'test_taken_id',
         'quiz_id',
+        'question_id',
         'correct_answer',
         'attempted_answer',
         'marks_alloted',
@@ -53,5 +55,10 @@ class AnswerSheet extends Model
     public function quiz()
     {
         return $this->belongsTo(Quiz::class, 'quiz_id')->withDefault();
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Questionarie::class, 'question_id')->withDefault();
     }
 }

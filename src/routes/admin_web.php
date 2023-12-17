@@ -133,6 +133,11 @@ use App\Modules\TeamMember\Staff\Controllers\StaffUpdateController;
 use App\Modules\Test\AnswerSheet\Controllers\TestTakenDeleteController;
 use App\Modules\Test\AnswerSheet\Controllers\TestTakenPaginateController;
 use App\Modules\Test\AnswerSheet\Controllers\TestTakenReportController;
+use App\Modules\Test\AnswerSheet\Controllers\TestTakenReportPdfController;
+use App\Modules\Test\Questionarie\Controllers\QuestionarieCreateController;
+use App\Modules\Test\Questionarie\Controllers\QuestionarieDeleteController;
+use App\Modules\Test\Questionarie\Controllers\QuestionariePaginateController;
+use App\Modules\Test\Questionarie\Controllers\QuestionarieUpdateController;
 use App\Modules\Test\Quiz\Controllers\QuizCreateController;
 use App\Modules\Test\Quiz\Controllers\QuizDeleteController;
 use App\Modules\Test\Quiz\Controllers\QuizPaginateController;
@@ -472,6 +477,14 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/update/{id}', [QuizUpdateController::class, 'get', 'as' => 'test.quiz.update.get'])->name('test.quiz.update.get');
                 Route::post('/update/{id}', [QuizUpdateController::class, 'post', 'as' => 'test.quiz.update.post'])->name('test.quiz.update.post');
                 Route::get('/delete/{id}', [QuizDeleteController::class, 'get', 'as' => 'test.quiz.delete.get'])->name('test.quiz.delete.get');
+                Route::prefix('/{quiz_id}')->group(function () {
+                    Route::get('/', [QuestionariePaginateController::class, 'get', 'as' => 'test.questionarie.paginate.get'])->name('test.questionarie.paginate.get');
+                    Route::get('/create', [QuestionarieCreateController::class, 'get', 'as' => 'test.questionarie.create.get'])->name('test.questionarie.create.get');
+                    Route::post('/create', [QuestionarieCreateController::class, 'post', 'as' => 'test.questionarie.create.post'])->name('test.questionarie.create.post');
+                    Route::get('/update/{id}', [QuestionarieUpdateController::class, 'get', 'as' => 'test.questionarie.update.get'])->name('test.questionarie.update.get');
+                    Route::post('/update/{id}', [QuestionarieUpdateController::class, 'post', 'as' => 'test.questionarie.update.post'])->name('test.questionarie.update.post');
+                    Route::get('/delete/{id}', [QuestionarieDeleteController::class, 'get', 'as' => 'test.questionarie.delete.get'])->name('test.questionarie.delete.get');
+                });
             });
         });
     });

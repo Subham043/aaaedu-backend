@@ -2,6 +2,7 @@
 
 namespace App\Modules\Test\AnswerSheet\Resources;
 
+use App\Modules\Test\Questionarie\Resources\UserQuestionarieTakenCollection;
 use App\Modules\Test\Quiz\Resources\UserQuizTakenCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,6 +21,7 @@ class UserTestQuestionSetCollection extends JsonResource
             'uuid' => $this->uuid,
             'test_id' => $this->test_id,
             'current_quiz' => UserQuizTakenCollection::make($this->current_quiz),
+            'current_question' => UserQuestionarieTakenCollection::make($this->current_question),
             'user_id' => $this->user_id,
             'is_enrolled' => $this->is_enrolled,
             'enrollment_type' => $this->enrollment_type,

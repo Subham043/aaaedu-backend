@@ -2,8 +2,8 @@
 
 namespace App\Modules\Test\Quiz\Models;
 
-use App\Enums\CorrectAnswer;
 use App\Enums\Difficulty;
+use App\Modules\Test\Questionarie\Models\Questionarie;
 use App\Modules\Test\Subject\Models\Subject;
 use App\Modules\Test\Test\Models\Test;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,36 +27,26 @@ class Quiz extends Model implements Sitemapable
      */
     protected $fillable = [
         'uuid',
-        'question',
-        'question_unfiltered',
-        'answer_1',
-        'answer_1_unfiltered',
-        'answer_2',
-        'answer_2_unfiltered',
-        'answer_3',
-        'answer_3_unfiltered',
-        'answer_4',
-        'answer_4_unfiltered',
         'difficulty',
         'duration',
         'mark',
-        'correct_answer',
+        'negative_mark',
         'subject_id',
         'test_id',
     ];
 
     protected $casts = [
         'mark' => 'int',
+        'negative_mark' => 'int',
         'duration' => 'int',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'difficulty' => Difficulty::class,
-        'correct_answer' => CorrectAnswer::class,
     ];
 
     protected $attributes = [
         'difficulty' => Difficulty::Easy,
-        'correct_answer' => CorrectAnswer::Answer1,
+        'negative_mark' => 0,
     ];
 
     protected function uuid(): Attribute
@@ -74,6 +64,11 @@ class Quiz extends Model implements Sitemapable
     public function subject()
     {
         return $this->belongsTo(Subject::class, 'subject_id')->withDefault();
+    }
+
+    public function questionaries()
+    {
+        return $this->hasMany(Questionarie::class, 'quiz_id');
     }
 
     public function getActivitylogOptions(): LogOptions

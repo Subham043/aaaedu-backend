@@ -14,20 +14,10 @@ return new class extends Migration
         Schema::create('test_quizs', function (Blueprint $table) {
             $table->id();
             $table->string('uuid', 500)->unique()->nullable();
-            $table->text('question')->nullable();
-            $table->text('question_unfiltered')->nullable();
-            $table->text('answer_1')->nullable();
-            $table->text('answer_1_unfiltered')->nullable();
-            $table->text('answer_2')->nullable();
-            $table->text('answer_2_unfiltered')->nullable();
-            $table->text('answer_3')->nullable();
-            $table->text('answer_3_unfiltered')->nullable();
-            $table->text('answer_4')->nullable();
-            $table->text('answer_4_unfiltered')->nullable();
             $table->string('difficulty', 500)->nullable();
             $table->string('duration', 500)->nullable();
             $table->string('mark', 500)->nullable();
-            $table->string('correct_answer', 500)->nullable();
+            $table->string('negative_mark', 500)->default(0);
             $table->foreignId('subject_id')->nullable()->constrained('test_subjects')->nullOnDelete();
             $table->foreignId('test_id')->nullable()->constrained('tests')->nullOnDelete();
             $table->timestamps();

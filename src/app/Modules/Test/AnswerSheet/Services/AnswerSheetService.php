@@ -36,10 +36,13 @@ class AnswerSheetService
             $payment_arr['razorpay_order_id'] = (new RazorpayService)->create_order_id($test->amount, $receipt);
             $payment_arr['payment_status'] = PaymentStatus::PENDING->value;
         }
+        $questionarie_set = $quiz->questionaries->pluck('id')->toArray();
+        $key = array_rand($questionarie_set);
         $test_taken = TestTaken::create(
             [
                 'test_id' => $test->id,
                 'current_quiz_id'=> $quiz->id,
+                'current_question_id'=> $questionarie_set[$key],
                 'user_id' => auth()->user()->id,
                 'uuid' => Str::uuid()->toString(),
                 'is_enrolled' => $test->is_paid ? false : true,
@@ -80,13 +83,17 @@ class AnswerSheetService
             AnswerSheet::create([
                 'test_taken_id' => $test_question->id,
                 'quiz_id' => $test_question->current_quiz->id,
-                'correct_answer' => $test_question->current_quiz->correct_answer->value,
-                'marks_alloted' => empty($request->attempted_answer) ? 0 : ($request->attempted_answer==$test_question->current_quiz->correct_answer->value ? $test_question->current_quiz->mark : 0),
+                'question_id' => $test_question->current_question->id,
+                'correct_answer' => $test_question->current_question->correct_answer->value,
+                'marks_alloted' => empty($request->attempted_answer) ? $test_question->current_quiz->negative_mark : ($request->attempted_answer==$test_question->current_question->correct_answer->value ? $test_question->current_quiz->mark : $test_question->current_quiz->negative_mark),
                 ...$request->all()
             ]);
             $next_question = $this->get_next_question($test, $test_question->current_quiz->id);
             if(!empty($next_question)){
+                $questionarie_set = $next_question->questionaries->pluck('id')->toArray();
+                $key = array_rand($questionarie_set);
                 $test_question->current_quiz_id=$next_question->id;
+                $test_question->current_question_id=$questionarie_set[$key];
                 $test_question->test_status=TestStatus::ONGOING->value;
             }else{
                 $test_question->test_status=TestStatus::COMPLETED->value;
@@ -104,7 +111,8 @@ class AnswerSheetService
             AnswerSheet::create([
                 'test_taken_id' => $test_question->id,
                 'quiz_id' => $test_question->current_quiz->id,
-                'marks_alloted' => 0,
+                'question_id' => $test_question->current_question->id,
+                'marks_alloted' => $test_question->current_quiz->negative_mark,
                 'attempt_status' => TestAttemptStatus::ELIMINATED->value,
                 'reason' => $request->reason
             ]);

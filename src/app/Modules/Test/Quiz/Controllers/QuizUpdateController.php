@@ -24,7 +24,6 @@ class QuizUpdateController extends Controller
     public function get($test_id, $id){
         $data = $this->quizService->getByTestIdAndId($test_id, $id);
         return view('admin.pages.test.quiz.update', compact(['data', 'test_id']))->with([
-            'correct_answer' => array_column(CorrectAnswer::cases(), 'value'),
             'difficulty' => array_column(Difficulty::cases(), 'value'),
             'subjects' => $this->subjectService->all($test_id),
         ]);

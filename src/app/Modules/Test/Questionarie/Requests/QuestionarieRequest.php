@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Modules\Test\Quiz\Requests;
+namespace App\Modules\Test\Questionarie\Requests;
 
-use App\Enums\Difficulty;
+use App\Enums\CorrectAnswer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Validation\Rules\Enum;
 
 
-class QuizRequest extends FormRequest
+class QuestionarieRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,11 +29,17 @@ class QuizRequest extends FormRequest
     public function rules()
     {
         return [
-            'duration' => 'required|numeric|gt:0',
-            'mark' => 'required|numeric|gt:0',
-            'negative_mark' => 'required|numeric|lte:0',
-            'difficulty' => ['required', new Enum(Difficulty::class)],
-            'subject_id' => 'required|numeric|exists:test_subjects,id',
+            'question' => 'required|string',
+            'question_unfiltered' => 'required|string',
+            'answer_1' => 'required|string',
+            'answer_1_unfiltered' => 'required|string',
+            'answer_2' => 'required|string',
+            'answer_2_unfiltered' => 'required|string',
+            'answer_3' => 'required|string',
+            'answer_3_unfiltered' => 'required|string',
+            'answer_4' => 'required|string',
+            'answer_4_unfiltered' => 'required|string',
+            'correct_answer' => ['required', new Enum(CorrectAnswer::class)],
         ];
     }
 

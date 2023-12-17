@@ -27,7 +27,6 @@ class QuizCreateController extends Controller
     public function get($test_id){
         $this->testService->getById($test_id);
         return view('admin.pages.test.quiz.create', compact(['test_id']))->with([
-            'correct_answer' => array_column(CorrectAnswer::cases(), 'value'),
             'difficulty' => array_column(Difficulty::cases(), 'value'),
             'subjects' => $this->subjectService->all($test_id),
         ]);
