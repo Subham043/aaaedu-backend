@@ -38,4 +38,10 @@ return [
         'webhook_secret' => env('RAZORPAY_WEBHOOK_SECRET'),
     ],
 
+    'extraedge' => [
+        'url' => env('EXTRAEDGE_URL'),
+        'authtoken' => env('EXTRAEDGE_AUTHTOKEN'),
+        'source' => env('EXTRAEDGE_SOURCE'),
+    ],
+
 ];
