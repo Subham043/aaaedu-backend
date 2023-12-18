@@ -56,13 +56,15 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('name', 'LIKE', '%' . $value . '%')
-        ->orWhere('phone', 'LIKE', '%' . $value . '%')
-        ->orWhere('request_type', 'LIKE', '%' . $value . '%')
-        ->orWhere('branch', 'LIKE', '%' . $value . '%')
-        ->orWhere('course', 'LIKE', '%' . $value . '%')
-        ->orWhere('location', 'LIKE', '%' . $value . '%')
-        ->orWhere('detail', 'LIKE', '%' . $value . '%')
-        ->orWhere('email', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('name', 'LIKE', '%' . $value . '%')
+            ->orWhere('phone', 'LIKE', '%' . $value . '%')
+            ->orWhere('request_type', 'LIKE', '%' . $value . '%')
+            ->orWhere('branch', 'LIKE', '%' . $value . '%')
+            ->orWhere('course', 'LIKE', '%' . $value . '%')
+            ->orWhere('location', 'LIKE', '%' . $value . '%')
+            ->orWhere('detail', 'LIKE', '%' . $value . '%')
+            ->orWhere('email', 'LIKE', '%' . $value . '%');
+        });
     }
 }

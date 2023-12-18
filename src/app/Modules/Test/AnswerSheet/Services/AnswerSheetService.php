@@ -257,10 +257,12 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('enrollment_type', 'LIKE', '%' . $value . '%')
-        ->orWhere('test_status', 'LIKE', '%' . $value . '%')
-        ->orWhere('razorpay_order_id', 'LIKE', '%' . $value . '%')
-        ->orWhere('razorpay_payment_id', 'LIKE', '%' . $value . '%')
-        ->orWhere('amount', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('enrollment_type', 'LIKE', '%' . $value . '%')
+            ->orWhere('test_status', 'LIKE', '%' . $value . '%')
+            ->orWhere('razorpay_order_id', 'LIKE', '%' . $value . '%')
+            ->orWhere('razorpay_payment_id', 'LIKE', '%' . $value . '%')
+            ->orWhere('amount', 'LIKE', '%' . $value . '%');
+        });
     }
 }

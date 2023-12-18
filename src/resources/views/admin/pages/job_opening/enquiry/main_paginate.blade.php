@@ -51,7 +51,7 @@
                                             <td class="customer_name">{{ $item->email }}</td>
                                             <td class="customer_name">{{ $item->phone }}</td>
                                             <td class="customer_name">{{ $item->job->name }}</td>
-                                            <td class="customer_name">{{ $item->cv_link }}</td>
+                                            <td class="customer_name"><a href="{{ $item->cv_link }}" download>Download</a></td>
                                             <td class="date">{{$item->created_at->diffForHumans()}}</td>
                                             <td>
                                                 <div class="d-flex gap-2">

@@ -45,6 +45,9 @@ use App\Modules\Faq\Controllers\UserFaqPaginateController;
 use App\Modules\Feature\Controllers\UserFeatureAllController;
 use App\Modules\Gallery\Controllers\UserGalleryPaginateController;
 use App\Modules\HomePage\Banner\Controllers\UserBannerAllController;
+use App\Modules\JobOpening\JobEnquiry\Controllers\UserJobEnquiryCreateController;
+use App\Modules\JobOpening\JobOpening\Controllers\UserJobOpeningAllController;
+use App\Modules\JobOpening\JobOpening\Controllers\UserJobOpeningPaginateController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
 use App\Modules\Legal\Controllers\UserLegalDetailController;
 use App\Modules\MissionVision\Controllers\UserMissionVisionController;
@@ -146,6 +149,14 @@ Route::prefix('legal')->group(function () {
 
 Route::prefix('website-detail')->group(function () {
     Route::get('/', [UserGeneralController::class, 'get'])->name('user.website-detail.all');
+});
+
+Route::prefix('job-openings')->group(function () {
+    Route::get('/', [UserJobOpeningPaginateController::class, 'get'])->name('user.job.paginate');
+    Route::get('/all', [UserJobOpeningAllController::class, 'get'])->name('user.job.all');
+    Route::prefix('enquiry')->group(function () {
+        Route::post('/{job_id}/create', [UserJobEnquiryCreateController::class, 'post'])->name('user.job.enquiry.create');
+    });
 });
 
 Route::prefix('blog')->group(function () {

@@ -37,7 +37,7 @@ class UserJobEnquiryCreateController extends Controller
             (new RateLimitService($request))->clearRateLimit();
             return response()->json([
                 "message" => "Job Enquiry created successfully.",
-                "comment" => UserJobEnquiryCollection::make($blogJobEnquiry)
+                "job_enquiry" => UserJobEnquiryCollection::make($blogJobEnquiry)
             ], 201);
         } catch (\Throwable $th) {
             return response()->json(["message" => "Something went wrong. Please try again"], 400);

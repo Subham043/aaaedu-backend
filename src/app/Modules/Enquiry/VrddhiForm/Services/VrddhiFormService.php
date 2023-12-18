@@ -75,16 +75,18 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('name', 'LIKE', '%' . $value . '%')
-        ->orWhere('school_name', 'LIKE', '%' . $value . '%')
-        ->orWhere('class', 'LIKE', '%' . $value . '%')
-        ->orWhere('father_name', 'LIKE', '%' . $value . '%')
-        ->orWhere('father_email', 'LIKE', '%' . $value . '%')
-        ->orWhere('father_phone', 'LIKE', '%' . $value . '%')
-        ->orWhere('mother_name', 'LIKE', '%' . $value . '%')
-        ->orWhere('mother_email', 'LIKE', '%' . $value . '%')
-        ->orWhere('mother_phone', 'LIKE', '%' . $value . '%')
-        ->orWhere('syllabus', 'LIKE', '%' . $value . '%')
-        ->orWhere('phone', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('name', 'LIKE', '%' . $value . '%')
+            ->orWhere('school_name', 'LIKE', '%' . $value . '%')
+            ->orWhere('class', 'LIKE', '%' . $value . '%')
+            ->orWhere('father_name', 'LIKE', '%' . $value . '%')
+            ->orWhere('father_email', 'LIKE', '%' . $value . '%')
+            ->orWhere('father_phone', 'LIKE', '%' . $value . '%')
+            ->orWhere('mother_name', 'LIKE', '%' . $value . '%')
+            ->orWhere('mother_email', 'LIKE', '%' . $value . '%')
+            ->orWhere('mother_phone', 'LIKE', '%' . $value . '%')
+            ->orWhere('syllabus', 'LIKE', '%' . $value . '%')
+            ->orWhere('phone', 'LIKE', '%' . $value . '%');
+        });
     }
 }

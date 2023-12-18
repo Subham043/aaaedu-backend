@@ -49,12 +49,7 @@
                                             <td class="customer_name">{{ $item->name }}</td>
                                             <td class="customer_name">{{ $item->email }}</td>
                                             <td class="customer_name">{{ $item->phone }}</td>
-                                            <td class="customer_name">{{ $item->cv_link }}</td>
-                                            @if($item->is_approved == 1)
-                                            <td class="status"><span class="badge badge-soft-success text-uppercase">Yes</span></td>
-                                            @else
-                                            <td class="status"><span class="badge badge-soft-danger text-uppercase">No</span></td>
-                                            @endif
+                                            <td class="customer_name"><a href="{{ $item->cv_link }}" download>Download</a></td>
                                             <td class="date">{{$item->created_at->diffForHumans()}}</td>
                                             <td>
                                                 <div class="d-flex gap-2">
