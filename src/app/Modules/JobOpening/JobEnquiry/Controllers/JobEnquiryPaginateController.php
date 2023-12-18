@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\JobOpening\JobEnquiry\Services\JobEnquiryService;
 use Illuminate\Http\Request;
 
-class BlogCommentPaginateController extends Controller
+class JobEnquiryPaginateController extends Controller
 {
     private $enquiryService;
 

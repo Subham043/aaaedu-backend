@@ -145,15 +145,40 @@
                                 </a>
                                 <div class="collapse menu-dropdown {{strpos(url()->current(),'blog') !== false ? 'show' : ''}}" id="sidebarDashboards12">
                                     <ul class="nav nav-sm flex-column">
-                                        @can('list team member managements')
+                                        @can('list blogs')
                                             <li class="nav-item">
                                                 <a href="{{route('blog.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('blog.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Blogs </a>
                                             </li>
                                         @endcan
 
-                                        @can('list team member staffs')
+                                        @can('list blogs')
                                             <li class="nav-item">
                                                 <a href="{{route('blog.comment.main_paginate.get')}}" class="nav-link {{strpos(url()->current(), route('blog.comment.main_paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Comments </a>
+                                            </li>
+                                        @endcan
+
+                                    </ul>
+                                </div>
+                            </li>
+                            @endcan
+
+                            @can('list blogs')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),'job-openings') !== false ? 'active' : ''}}" href="#sidebarDashboards13" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="{{strpos(url()->current(),'job-openings') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards13">
+                                    <i class="ri-user-star-fill"></i> <span data-key="t-dashboards">Job</span>
+                                </a>
+                                <div class="collapse menu-dropdown {{strpos(url()->current(),'job-openings') !== false ? 'show' : ''}}" id="sidebarDashboards13">
+                                    <ul class="nav nav-sm flex-column">
+                                        @can('list blogs')
+                                            <li class="nav-item">
+                                                <a href="{{route('job_opening.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('job_opening.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Openings </a>
+                                            </li>
+                                        @endcan
+
+                                        @can('list blogs')
+                                            <li class="nav-item">
+                                                <a href="{{route('job_opening.job_enquiry.main_paginate.get')}}" class="nav-link {{strpos(url()->current(), route('job_opening.job_enquiry.main_paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Enquiries </a>
                                             </li>
                                         @endcan
 

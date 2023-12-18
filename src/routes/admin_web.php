@@ -119,6 +119,13 @@ use App\Modules\HomePage\Banner\Controllers\BannerCreateController;
 use App\Modules\HomePage\Banner\Controllers\BannerDeleteController;
 use App\Modules\HomePage\Banner\Controllers\BannerPaginateController;
 use App\Modules\HomePage\Banner\Controllers\BannerUpdateController;
+use App\Modules\JobOpening\JobEnquiry\Controllers\JobEnquiryDeleteController;
+use App\Modules\JobOpening\JobEnquiry\Controllers\JobEnquiryMainPaginateController;
+use App\Modules\JobOpening\JobEnquiry\Controllers\JobEnquiryPaginateController;
+use App\Modules\JobOpening\JobOpening\Controllers\JobOpeningCreateController;
+use App\Modules\JobOpening\JobOpening\Controllers\JobOpeningDeleteController;
+use App\Modules\JobOpening\JobOpening\Controllers\JobOpeningPaginateController;
+use App\Modules\JobOpening\JobOpening\Controllers\JobOpeningUpdateController;
 use App\Modules\MissionVision\Controllers\MissionVisionController;
 use App\Modules\Seo\Controllers\SeoPaginateController;
 use App\Modules\Seo\Controllers\SeoUpdateController;
@@ -267,6 +274,22 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [UserUpdateController::class, 'get', 'as' => 'user.update.get'])->name('user.update.get');
         Route::post('/update/{id}', [UserUpdateController::class, 'post', 'as' => 'user.update.get'])->name('user.update.post');
         Route::get('/delete/{id}', [UserDeleteController::class, 'get', 'as' => 'user.delete.get'])->name('user.delete.get');
+    });
+
+    Route::prefix('/job-openings')->group(function () {
+        Route::get('/', [JobOpeningPaginateController::class, 'get', 'as' => 'job_opening.paginate.get'])->name('job_opening.paginate.get');
+        Route::get('/enquiry-list', [JobEnquiryMainPaginateController::class, 'get', 'as' => 'job_opening.job_enquiry.main_paginate.get'])->name('job_opening.job_enquiry.main_paginate.get');
+        Route::get('/create', [JobOpeningCreateController::class, 'get', 'as' => 'job_opening.create.get'])->name('job_opening.create.get');
+        Route::post('/create', [JobOpeningCreateController::class, 'post', 'as' => 'job_opening.create.post'])->name('job_opening.create.post');
+        Route::get('/update/{id}', [JobOpeningUpdateController::class, 'get', 'as' => 'job_opening.update.get'])->name('job_opening.update.get');
+        Route::post('/update/{id}', [JobOpeningUpdateController::class, 'post', 'as' => 'job_opening.update.post'])->name('job_opening.update.post');
+        Route::get('/delete/{id}', [JobOpeningDeleteController::class, 'get', 'as' => 'job_opening.delete.get'])->name('job_opening.delete.get');
+        Route::prefix('/{job_id}')->group(function () {
+            Route::prefix('/enquiries')->group(function () {
+                Route::get('/', [JobEnquiryPaginateController::class, 'get', 'as' => 'job_opening.job_enquiry.paginate.get'])->name('job_opening.job_enquiry.paginate.get');
+                Route::get('/delete/{id}', [JobEnquiryDeleteController::class, 'get', 'as' => 'job_opening.job_enquiry.delete.get'])->name('job_opening.job_enquiry.delete.get');
+            });
+        });
     });
 
     Route::prefix('/blog')->group(function () {

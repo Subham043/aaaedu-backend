@@ -16,12 +16,12 @@ class JobOpeningDeleteController extends Controller
     }
 
     public function get($id){
-        $blog = $this->jobService->getById($id);
+        $job = $this->jobService->getById($id);
 
         try {
             //code...
             $this->jobService->delete(
-                $blog
+                $job
             );
             return redirect()->back()->with('success_status', 'Job Opening deleted successfully.');
         } catch (\Throwable $th) {
