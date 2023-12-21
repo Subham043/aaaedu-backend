@@ -232,7 +232,7 @@ Route::prefix('tests')->group(function () {
 
 Route::prefix('artibot-request')->group(function () {
     Route::post('/create', [ChatbotFormCreateController::class, 'post'])->name('chatbot.create.request');
-    Route::post('/update/{id}', [ChatbotFormUpdateController::class, 'post'])->name('chatbot.update.request');
+    Route::post('/update/{lead_id}', [ChatbotFormUpdateController::class, 'post'])->name('chatbot.update.request');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {

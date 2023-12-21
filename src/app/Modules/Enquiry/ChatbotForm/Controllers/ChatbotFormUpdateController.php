@@ -17,8 +17,8 @@ class ChatbotFormUpdateController extends Controller
         $this->chatbotFormService = $chatbotFormService;
     }
 
-    public function post(ChatbotFormRequest $request, $id){
-        $chatbot = $this->chatbotFormService->getByLeadId($id);
+    public function post(ChatbotFormRequest $request, $lead_id){
+        $chatbot = $this->chatbotFormService->getByLeadId($lead_id);
         try {
             //code...
             $chatbotForm = $this->chatbotFormService->update(
