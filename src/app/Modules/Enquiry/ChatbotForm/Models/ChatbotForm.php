@@ -53,7 +53,7 @@ class ChatbotForm extends Model
     {
         parent::boot();
         self::updated(function ($data) {
-            if($data->name && $data->email && $data->phone){
+            if(!empty($data->name) && !empty($data->email) && !empty($data->phone) && empty($data->multiple_choice_query)){
                 dispatch(new ChatbotFormEmailJob($data));
             }
         });
