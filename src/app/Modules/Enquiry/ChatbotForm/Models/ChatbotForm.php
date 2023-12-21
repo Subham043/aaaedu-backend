@@ -52,8 +52,10 @@ class ChatbotForm extends Model
     public static function boot()
     {
         parent::boot();
-        self::created(function ($data) {
-            dispatch(new ChatbotFormEmailJob($data));
+        self::updated(function ($data) {
+            if($data->name && $data->email && $data->phone){
+                dispatch(new ChatbotFormEmailJob($data));
+            }
         });
     }
 
