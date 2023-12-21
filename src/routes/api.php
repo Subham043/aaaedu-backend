@@ -28,6 +28,8 @@ use App\Modules\Course\Branch\Controllers\UserBranchAllController;
 use App\Modules\Course\Branch\Controllers\UserBranchDetailController;
 use App\Modules\Course\Course\Controllers\UserCourseAllController;
 use App\Modules\Course\Course\Controllers\UserCourseDetailController;
+use App\Modules\Enquiry\ChatbotForm\Controllers\ChatbotFormCreateController;
+use App\Modules\Enquiry\ChatbotForm\Controllers\ChatbotFormUpdateController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use App\Modules\Enquiry\CourseRequestForm\Controllers\CourseRequestFormCreateController;
 use App\Modules\Enquiry\EnrollmentForm\Controllers\EnrollmentFormCreateController;
@@ -226,6 +228,11 @@ Route::prefix('tests')->group(function () {
     Route::middleware(['auth:sanctum'])->get('/main-paginate', [UserTestPaginateController::class, 'get'])->name('user.test.paginate.main');
     Route::get('/all', [UserTestAllController::class, 'get'])->name('user.test.all');
     Route::get('/{slug}', [UserTestDetailController::class, 'get'])->name('user.test.detail');
+});
+
+Route::prefix('artibot-request')->group(function () {
+    Route::post('/create', [ChatbotFormCreateController::class, 'post'])->name('chatbot.create.request');
+    Route::post('/update/{id}', [ChatbotFormUpdateController::class, 'post'])->name('chatbot.update.request');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {

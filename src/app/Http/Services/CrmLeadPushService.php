@@ -2,19 +2,18 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Support\Facades\Http;
-
 class CrmLeadPushService
 {
 
     protected function get_lead_channel_id($lead_channel): int
     {
-        switch ($lead_channel) {
-            case 'Bangalore':
+        $data = strtolower($lead_channel);
+        switch ($data) {
+            case 'bangalore':
                 # code...
                 return 1;
                 break;
-            case 'Mysore':
+            case 'mysore':
                 # code...
                 return 7;
                 break;
@@ -27,22 +26,94 @@ class CrmLeadPushService
 
     protected function get_course_id($course): int
     {
-        switch ($course) {
-            case 'Vijaynagar':
+        $data = strtolower($course);
+        switch ($data) {
+            case 'vijaynagar':
                 # code...
                 return 1;
                 break;
-            case 'Uttarahalli':
+            case 'uttarahalli':
                 # code...
                 return 5;
                 break;
-            case 'Ullal Main Road':
+            case 'ullal main road':
                 # code...
                 return 6;
                 break;
-            case 'Srirangapatna':
+            case 'srirangapatna':
                 # code...
                 return 7;
+                break;
+            default:
+                # code...
+                return 5;
+                break;
+        }
+    }
+
+    protected function get_center_id($center): int
+    {
+        $data = strtolower($center);
+        switch ($data) {
+            case 'integrated jee batch residential':
+                # code...
+                return 1;
+                break;
+            case 'integrated neet batch residential':
+                # code...
+                return 6;
+                break;
+            case 'integrated jee batch days scholar':
+                # code...
+                return 7;
+                break;
+            case 'integrated neet batch days scholar':
+                # code...
+                return 8;
+                break;
+            case 'integrated cet batch residential':
+                # code...
+                return 9;
+                break;
+            case 'integrated cet batch days scholar':
+                # code...
+                return 10;
+                break;
+            case 'jee repeaters':
+                # code...
+                return 11;
+                break;
+            case 'neet repeaters':
+                # code...
+                return 12;
+                break;
+            case 'class foundation 8 course':
+                # code...
+                return 13;
+                break;
+            case 'class foundation 9 course':
+                # code...
+                return 14;
+                break;
+            case 'class foundation 10 course':
+                # code...
+                return 15;
+                break;
+            case 'class 9 board batch':
+                # code...
+                return 16;
+                break;
+            case 'board tuitions 9 icse':
+                # code...
+                return 17;
+                break;
+            case 'class 10 board batch':
+                # code...
+                return 18;
+                break;
+            case 'board tuitions 10 icse':
+                # code...
+                return 19;
                 break;
             default:
                 # code...
@@ -51,7 +122,7 @@ class CrmLeadPushService
         }
     }
 
-    public function push_lead(string $name, string $email, string $phone, string $lead_channel, string $course): bool
+    public function push_lead(string $name, string $email, string $phone, string $lead_channel, string $course, string $center): bool
     {
         $curl = curl_init();
 
@@ -63,7 +134,7 @@ class CrmLeadPushService
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{\n    \"AuthToken\": \"".config('services.extraedge.authtoken')."\",\n    \"Source\": \"".config('services.extraedge.source')."\",\n    \"FirstName\": \"".$name."\",\n    \"Email\": \"".$email."\",\n    \"MobileNumber\": \"".$phone."\",\n    \"LeadName\": \"ThirdParty\",\n    \"leadCampaign\": \"ThirdParty\",\n    \"LeadSource\": \"20\",\n    \"LeadChannel\": \"".$this->get_lead_channel_id($lead_channel)."\",\n    \"Course\": \"".$this->get_course_id($course)."\",\n    \"Center\": \"1\"\n}\n",
+            CURLOPT_POSTFIELDS => "{\n    \"AuthToken\": \"".config('services.extraedge.authtoken')."\",\n    \"Source\": \"".config('services.extraedge.source')."\",\n    \"FirstName\": \"".$name."\",\n    \"Email\": \"".$email."\",\n    \"MobileNumber\": \"".$phone."\",\n    \"LeadName\": \"ThirdParty\",\n    \"leadCampaign\": \"ThirdParty\",\n    \"LeadSource\": \"20\",\n    \"LeadChannel\": \"".$this->get_lead_channel_id($lead_channel)."\",\n    \"Course\": \"".$this->get_course_id($course)."\",\n    \"Center\": \"".$this->get_center_id($center)."\"\n}\n",
             CURLOPT_HTTPHEADER => [
                 "Accept: application/json",
                 "Content-Type: application/json"

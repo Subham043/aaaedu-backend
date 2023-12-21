@@ -55,6 +55,9 @@ use App\Modules\Course\Course\Controllers\CourseCreateController;
 use App\Modules\Course\Course\Controllers\CourseDeleteController;
 use App\Modules\Course\Course\Controllers\CoursePaginateController;
 use App\Modules\Course\Course\Controllers\CourseUpdateController;
+use App\Modules\Enquiry\ChatbotForm\Controllers\ChatbotFormDeleteController;
+use App\Modules\Enquiry\ChatbotForm\Controllers\ChatbotFormExcelController;
+use App\Modules\Enquiry\ChatbotForm\Controllers\ChatbotFormPaginateController;
 use App\Modules\Enquiry\CourseRequestForm\Controllers\CourseRequestFormDeleteController;
 use App\Modules\Enquiry\CourseRequestForm\Controllers\CourseRequestFormExcelController;
 use App\Modules\Enquiry\CourseRequestForm\Controllers\CourseRequestFormPaginateController;
@@ -230,6 +233,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [CourseRequestFormPaginateController::class, 'get', 'as' => 'enquiry.courseRequest_form.paginate.get'])->name('enquiry.courseRequest_form.paginate.get');
             Route::get('/excel', [CourseRequestFormExcelController::class, 'get', 'as' => 'enquiry.courseRequest_form.excel.get'])->name('enquiry.courseRequest_form.excel.get');
             Route::get('/delete/{id}', [CourseRequestFormDeleteController::class, 'get', 'as' => 'enquiry.courseRequest_form.delete.get'])->name('enquiry.courseRequest_form.delete.get');
+        });
+        Route::prefix('/chatbot-form')->group(function () {
+            Route::get('/', [ChatbotFormPaginateController::class, 'get', 'as' => 'enquiry.chatbot_form.paginate.get'])->name('enquiry.chatbot_form.paginate.get');
+            Route::get('/excel', [ChatbotFormExcelController::class, 'get', 'as' => 'enquiry.chatbot_form.excel.get'])->name('enquiry.chatbot_form.excel.get');
+            Route::get('/delete/{id}', [ChatbotFormDeleteController::class, 'get', 'as' => 'enquiry.chatbot_form.delete.get'])->name('enquiry.chatbot_form.delete.get');
         });
     });
 

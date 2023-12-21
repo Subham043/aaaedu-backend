@@ -71,6 +71,10 @@
                                             <li class="nav-item">
                                                 <a href="{{route('enquiry.courseRequest_form.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('enquiry.courseRequest_form.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Request Callback Form </a>
                                             </li>
+
+                                            <li class="nav-item">
+                                                <a href="{{route('enquiry.chatbot_form.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('enquiry.chatbot_form.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Chatbot </a>
+                                            </li>
                                         @endcan
 
                                     </ul>
