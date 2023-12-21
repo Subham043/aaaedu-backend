@@ -36,15 +36,15 @@
                                             <th class="sort" data-sort="customer_name">Name</th>
                                             <th class="sort" data-sort="customer_name">Email</th>
                                             <th class="sort" data-sort="customer_name">Phone</th>
-                                            <th class="sort" data-sort="customer_name">Multiple Choice Query</th>
-                                            <th class="sort" data-sort="customer_name">Visit Question</th>
-                                            <th class="sort" data-sort="customer_name">Admission Question</th>
-                                            <th class="sort" data-sort="customer_name">Contact Question</th>
-                                            <th class="sort" data-sort="customer_name">Course Branch Question</th>
-                                            <th class="sort" data-sort="customer_name">Course Standard Question</th>
-                                            <th class="sort" data-sort="customer_name">Course Name Question</th>
-                                            <th class="sort" data-sort="customer_name">Final Callback Question</th>
-                                            <th class="sort" data-sort="customer_name">Schedule Callback Question</th>
+                                            <th class="sort" data-sort="customer_name">Looking For</th>
+                                            <th class="sort" data-sort="customer_name">Admission For</th>
+                                            <th class="sort" data-sort="customer_name">Contact Mode</th>
+                                            <th class="sort" data-sort="customer_name">Visiting Us On</th>
+                                            <th class="sort" data-sort="customer_name">Course Branch</th>
+                                            <th class="sort" data-sort="customer_name">Course Standard</th>
+                                            <th class="sort" data-sort="customer_name">Course Name</th>
+                                            <th class="sort" data-sort="customer_name">Requesting Callback</th>
+                                            <th class="sort" data-sort="customer_name">Callback On</th>
                                             <th class="sort" data-sort="customer_name">Status</th>
                                             <th class="sort" data-sort="customer_name">IP Address</th>
                                             <th class="sort" data-sort="customer_name">Country</th>
@@ -64,9 +64,9 @@
                                             <td class="customer_name">{{$item->email}}</td>
                                             <td class="customer_name">{{$item->phone}}</td>
                                             <td class="customer_name">{{$item->multiple_choice_query}}</td>
-                                            <td class="customer_name">{{$item->visit_question}}</td>
                                             <td class="customer_name">{{$item->admission_question}}</td>
                                             <td class="customer_name">{{$item->contact_question}}</td>
+                                            <td class="customer_name">{{$item->visit_question}}</td>
                                             <td class="customer_name">{{$item->course_location_question}}</td>
                                             <td class="customer_name">{{$item->course_standard_question}}</td>
                                             <td class="customer_name">{{$item->school_course_question}}</td>
