@@ -23,7 +23,7 @@ class QuestionarieUpdateController extends Controller
 
     public function get($test_id, $quiz_id, $id){
         $data = $this->questionService->getByQuizIdAndId($quiz_id, $id);
-        return view('admin.pages.test.quiz.update', compact(['data', 'test_id', 'quiz_id']))->with([
+        return view('admin.pages.test.questionarie.update', compact(['data', 'test_id', 'quiz_id']))->with([
             'correct_answer' => array_column(CorrectAnswer::cases(), 'value'),
         ]);
     }
