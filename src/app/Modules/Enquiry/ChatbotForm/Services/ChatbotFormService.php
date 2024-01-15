@@ -34,7 +34,7 @@ class ChatbotFormService
         return ChatbotForm::findOrFail($id);
     }
 
-    public function getByLeadId(string $lead_id): ChatbotForm|null
+    public function getByLeadId(int $lead_id): ChatbotForm|null
     {
         return ChatbotForm::where('lead_id', $lead_id)->firstOrFail();
     }
