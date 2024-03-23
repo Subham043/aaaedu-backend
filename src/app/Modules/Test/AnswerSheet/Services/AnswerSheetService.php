@@ -215,7 +215,7 @@ class AnswerSheetService
         ])->where('is_enrolled', true)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

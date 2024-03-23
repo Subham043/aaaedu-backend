@@ -43,7 +43,7 @@ class QuizService
         $query = Quiz::with(['test', 'subject'])->where('test_id', $test_id)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

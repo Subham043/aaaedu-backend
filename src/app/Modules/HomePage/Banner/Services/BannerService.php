@@ -24,7 +24,7 @@ class BannerService
         $query = Banner::latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

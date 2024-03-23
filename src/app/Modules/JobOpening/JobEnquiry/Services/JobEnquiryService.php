@@ -24,7 +24,7 @@ class JobEnquiryService
         $query = JobEnquiry::where('job_id', $job_id)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -35,7 +35,7 @@ class JobEnquiryService
         $query = JobEnquiry::with('job')->wherehas('job')->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new MainCommonFilter),
+                    AllowedFilter::custom('search', new MainCommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -46,7 +46,7 @@ class JobEnquiryService
         $query = JobEnquiry::where('job_id', $job_id)->where('is_approved', true)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

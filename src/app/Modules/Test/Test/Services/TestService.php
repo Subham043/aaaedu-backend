@@ -31,7 +31,7 @@ class TestService
                 ->defaultSort('id')
                 ->allowedSorts('id', 'name')
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         $query->whereHas('test_taken', function($q) use($value) {
                             $q->where('test_status', $value);
@@ -47,7 +47,7 @@ class TestService
         $query = Test::latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

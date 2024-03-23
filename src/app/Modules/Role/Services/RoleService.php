@@ -29,7 +29,7 @@ class RoleService
         $query = Role::with(['permissions'])->whereNot('name', 'Super-Admin')->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total);
     }

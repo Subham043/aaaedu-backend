@@ -23,7 +23,7 @@ class CommentService
         $query = Comment::where('blog_id', $blog_id)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -34,7 +34,7 @@ class CommentService
         $query = Comment::with('blog')->wherehas('blog')->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new MainCommonFilter),
+                    AllowedFilter::custom('search', new MainCommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -45,7 +45,7 @@ class CommentService
         $query = Comment::where('blog_id', $blog_id)->where('is_approved', true)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

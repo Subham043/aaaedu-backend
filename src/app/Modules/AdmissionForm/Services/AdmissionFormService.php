@@ -25,7 +25,7 @@ class AdmissionFormService
         $query = AdmissionForm::where('admission_for', AdmissionEnum::PUC)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -36,7 +36,7 @@ class AdmissionFormService
         $query = AdmissionForm::where('admission_for', AdmissionEnum::NOT_PUC)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

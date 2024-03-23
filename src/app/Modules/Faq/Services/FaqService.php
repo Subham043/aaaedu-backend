@@ -26,7 +26,7 @@ class FaqService
                 ->allowedSorts('id', 'name')
                 ->allowedFilters([
                     'is_popular',
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -38,7 +38,7 @@ class FaqService
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     'is_popular',
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());

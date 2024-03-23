@@ -32,7 +32,7 @@ class BlogService
                 ->allowedSorts('id', 'name', 'published_on')
                 ->allowedFilters([
                     'is_popular',
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -44,7 +44,7 @@ class BlogService
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     'is_popular',
-                    AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
