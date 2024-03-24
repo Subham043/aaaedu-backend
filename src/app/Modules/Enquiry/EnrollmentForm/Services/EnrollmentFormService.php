@@ -21,7 +21,20 @@ class EnrollmentFormService
 
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
-        $query = EnrollmentForm::latest();
+        $query = EnrollmentForm::with(['course', 'branch'])->latest();
+        return QueryBuilder::for($query)
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
+    public function paginate_main(Int $total = 10): LengthAwarePaginator
+    {
+        $query = EnrollmentForm::with(['course', 'branch'])->where(function($q){
+            $q->where('email', auth()->user()->email)->orWhere('phone', auth()->user()->phone);
+        })->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter, null, false),

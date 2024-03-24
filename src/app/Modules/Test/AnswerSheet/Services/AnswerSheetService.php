@@ -245,6 +245,19 @@ class AnswerSheetService
                 ->appends(request()->query());
     }
 
+    public function paginate_main(Int $total = 10): LengthAwarePaginator
+    {
+        $query = TestTaken::with([
+            'test',
+        ])->where('is_enrolled', true)->where('user_id', auth()->user()->id)->latest();
+        return QueryBuilder::for($query)
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new CommonFilter, null, false),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function getById(Int $id): TestTaken|null
     {
         return TestTaken::where('is_enrolled', true)->findOrFail($id);

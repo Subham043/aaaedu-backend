@@ -33,6 +33,7 @@ use App\Modules\Enquiry\ChatbotForm\Controllers\ChatbotFormUpdateController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use App\Modules\Enquiry\CourseRequestForm\Controllers\CourseRequestFormCreateController;
 use App\Modules\Enquiry\EnrollmentForm\Controllers\EnrollmentFormCreateController;
+use App\Modules\Enquiry\EnrollmentForm\Controllers\UserEnrollmentFormPaginateController;
 use App\Modules\Enquiry\ScholarForm\Controllers\ScholarFormCreateController;
 use App\Modules\Enquiry\SubscriptionForm\Controllers\SubscriptionFormCreateController;
 use App\Modules\Enquiry\VrddhiForm\Controllers\VrddhiFormCreateController;
@@ -62,6 +63,7 @@ use App\Modules\Test\AnswerSheet\Controllers\UserTestEliminatedController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestFillAnswerController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestQuestionSetController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestReportController;
+use App\Modules\Test\AnswerSheet\Controllers\UserTestTakenPaginateController;
 use App\Modules\Test\Test\Controllers\UserTestAllController;
 use App\Modules\Test\Test\Controllers\UserTestDetailController;
 use App\Modules\Test\Test\Controllers\UserTestPaginateController;
@@ -243,6 +245,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update', [UserProfileController::class, 'post', 'as' => 'profile.post'])->name('user.profile.post');
         Route::post('/update-password', [UserPasswordUpdateController::class, 'post', 'as' => 'password.post'])->name('user.password.post');
     });
+
+    Route::get('/courses-enrolled', [UserEnrollmentFormPaginateController::class, 'get'])->name('user.course_enrolled.all');
+    Route::get('/tests-enrolled', [UserTestTakenPaginateController::class, 'get'])->name('user.test_enrolled.all');
 
 
     Route::prefix('tests')->group(function () {
