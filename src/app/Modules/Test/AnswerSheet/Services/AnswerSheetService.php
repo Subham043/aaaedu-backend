@@ -57,7 +57,8 @@ class AnswerSheetService
     public function test_question(Test $test): TestTaken
     {
         return TestTaken::with([
-            'current_quiz'
+            'current_quiz',
+            'current_question'
         ])
         ->where('test_id', $test->id)
         ->where('user_id', auth()->user()->id)
@@ -84,6 +85,21 @@ class AnswerSheetService
                 'test_taken_id' => $test_question->id,
                 'quiz_id' => $test_question->current_quiz->id,
                 'question_id' => $test_question->current_question->id,
+                'subject_name' => $test_question->current_quiz->subject->name,
+                'difficulty' => $test_question->current_quiz->difficulty,
+                'duration' => $test_question->current_quiz->duration,
+                'mark' => $test_question->current_quiz->mark,
+                'negative_mark' => $test_question->current_quiz->negative_mark,
+                'question' => $test_question->current_question->question,
+                'question_unfiltered' => $test_question->current_question->question_unfiltered,
+                'answer_1' => $test_question->current_question->answer_1,
+                'answer_1_unfiltered' => $test_question->current_question->answer_1_unfiltered,
+                'answer_2' => $test_question->current_question->answer_2,
+                'answer_2_unfiltered' => $test_question->current_question->answer_2_unfiltered,
+                'answer_3' => $test_question->current_question->answer_3,
+                'answer_3_unfiltered' => $test_question->current_question->answer_3_unfiltered,
+                'answer_4' => $test_question->current_question->answer_4,
+                'answer_4_unfiltered' => $test_question->current_question->answer_4_unfiltered,
                 'correct_answer' => $test_question->current_question->correct_answer->value,
                 'marks_alloted' => empty($request->attempted_answer) ? $test_question->current_quiz->negative_mark : ($request->attempted_answer==$test_question->current_question->correct_answer->value ? $test_question->current_quiz->mark : $test_question->current_quiz->negative_mark),
                 ...$request->all()
@@ -167,6 +183,14 @@ class AnswerSheetService
         $test_taken->razorpay_signature = $data['razorpay_signature'];
         $test_taken->payment_status = PaymentStatus::PAID;
         $test_taken->is_enrolled = true;
+        $test_taken->save();
+        return $test_taken;
+    }
+
+    public function cancel_payment(array $data): TestTaken
+    {
+        $test_taken = TestTaken::where('razorpay_order_id', $data['razorpay_order_id'])->firstOrFail();
+        $test_taken->payment_status = PaymentStatus::CANCELLED;
         $test_taken->save();
         return $test_taken;
     }

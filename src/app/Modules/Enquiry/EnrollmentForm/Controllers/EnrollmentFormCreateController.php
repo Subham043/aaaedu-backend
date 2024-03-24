@@ -8,6 +8,7 @@ use App\Http\Services\RazorpayService;
 use App\Modules\Course\Branch\Services\BranchService;
 use App\Modules\Course\Course\Services\CourseService;
 use App\Modules\Enquiry\EnrollmentForm\Jobs\EnrollmentFormEmailJob;
+use App\Modules\Enquiry\EnrollmentForm\Requests\CancelPaymentRequest;
 use App\Modules\Enquiry\EnrollmentForm\Requests\EnrollmentFormRequest;
 use App\Modules\Enquiry\EnrollmentForm\Requests\VerifyPaymentRequest;
 use App\Modules\Enquiry\EnrollmentForm\Resources\EnrollmentFormCollection;
@@ -67,6 +68,24 @@ class EnrollmentFormCreateController extends Controller
             dispatch(new EnrollmentFormEmailJob($data));
             return response()->json([
                 'message' => "Payment & Enrollment done successfully.",
+                'enrollmentForm' => EnrollmentFormCollection::make($data),
+            ], 200);
+        } catch (\Throwable $th) {
+            throw $th;
+            return response()->json([
+                'message' => "Something went wrong. Please try again",
+            ], 400);
+        }
+
+    }
+
+    public function cancel(CancelPaymentRequest $request){
+
+        try {
+            //code...
+            $data = $this->enrollmentFormService->cancel_payment($request->validated());
+            return response()->json([
+                'message' => "Payment cancelled successfully.",
                 'enrollmentForm' => EnrollmentFormCollection::make($data),
             ], 200);
         } catch (\Throwable $th) {

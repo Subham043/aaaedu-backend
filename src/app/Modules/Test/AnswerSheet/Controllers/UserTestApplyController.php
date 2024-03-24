@@ -4,6 +4,7 @@ namespace App\Modules\Test\AnswerSheet\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Test\AnswerSheet\Jobs\TestApplyEmailJob;
+use App\Modules\Test\AnswerSheet\Requests\CancelPaymentRequest;
 use App\Modules\Test\AnswerSheet\Requests\VerifyPaymentRequest;
 use App\Modules\Test\AnswerSheet\Resources\UserTestEnrollmentCollection;
 use App\Modules\Test\AnswerSheet\Services\AnswerSheetService;
@@ -51,6 +52,25 @@ class UserTestApplyController extends Controller
             dispatch(new TestApplyEmailJob($data));
             return response()->json([
                 'message' => "Payment & Test Enrollment done successfully.",
+                'enrollmentForm' => UserTestEnrollmentCollection::make($data),
+            ], 200);
+        } catch (\Throwable $th) {
+            throw $th;
+            return response()->json([
+                'message' => "Something went wrong. Please try again",
+            ], 400);
+        }
+
+    }
+
+    public function cancel(CancelPaymentRequest $request, $slug){
+        $this->testService->getBySlug($slug);
+
+        try {
+            //code...
+            $data = $this->answerSheetService->cancel_payment($request->validated());
+            return response()->json([
+                'message' => "Payment cancelled successfully.",
                 'enrollmentForm' => UserTestEnrollmentCollection::make($data),
             ], 200);
         } catch (\Throwable $th) {

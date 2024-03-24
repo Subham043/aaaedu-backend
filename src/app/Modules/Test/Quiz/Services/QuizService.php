@@ -20,17 +20,17 @@ class QuizService
 
     public function all_main_grouped_by_subjects(Int $test_id): Collection
     {
-        return Quiz::with(['test', 'subject'])->where('test_id', $test_id)->orderBy('subject_id', 'ASC')->get();
+        return Quiz::with(['test', 'subject'])->where('test_id', $test_id)->orderBy('subject_id', 'ASC')->orderBy('id', 'ASC')->get();
     }
 
     public function count_main_grouped_by_subjects(Int $test_id): int
     {
-        return Quiz::where('test_id', $test_id)->orderBy('subject_id', 'ASC')->count();
+        return Quiz::where('test_id', $test_id)->orderBy('subject_id', 'ASC')->orderBy('id', 'ASC')->count();
     }
 
     public function total_score_main(Int $test_id): int
     {
-        return Quiz::where('test_id', $test_id)->orderBy('subject_id', 'ASC')->sum('mark');
+        return Quiz::where('test_id', $test_id)->orderBy('subject_id', 'ASC')->orderBy('id', 'ASC')->sum('mark');
     }
 
     public function total_score_main_grouped_by_subjects(Int $test_id): Collection
@@ -56,7 +56,7 @@ class QuizService
 
     public function getCurrentQuizByTestId(Int $test_id): Quiz
     {
-        return Quiz::with(['test', 'subject'])->where('test_id', $test_id)->firstOrFail();
+        return Quiz::with(['test', 'subject'])->where('test_id', $test_id)->orderBy('subject_id', 'ASC')->orderBy('id', 'ASC')->firstOrFail();
     }
 
     public function getByTestIdAndId(Int $test_id, Int $id): Quiz|null

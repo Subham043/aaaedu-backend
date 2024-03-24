@@ -3,14 +3,12 @@
 namespace App\Modules\Enquiry\EnrollmentForm\Requests;
 
 use App\Enums\PaymentStatus;
-use App\Http\Services\RazorpayService;
 use App\Modules\Enquiry\EnrollmentForm\Models\EnrollmentForm;
-use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Stevebauman\Purify\Facades\Purify;
 
 
-class VerifyPaymentRequest extends FormRequest
+class CancelPaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,17 +29,6 @@ class VerifyPaymentRequest extends FormRequest
     {
         return [
             'razorpay_order_id' => ['required', 'string'],
-            'razorpay_payment_id' => ['required', 'string'],
-            'razorpay_signature' => [
-                'required',
-                'string',
-                function (string $attribute, mixed $value, Closure $fail) {
-                    $verify_signature = (new RazorpayService)->payment_verify($this->safe()->only(['razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature']));
-                    if (!$verify_signature) {
-                        $fail("Payment verification failed.");
-                    }
-                },
-            ],
         ];
     }
 

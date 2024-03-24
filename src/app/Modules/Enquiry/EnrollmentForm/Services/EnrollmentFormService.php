@@ -61,6 +61,14 @@ class EnrollmentFormService
         return $enrollmentForm;
     }
 
+    public function cancel_payment(array $data): EnrollmentForm
+    {
+        $enrollmentForm = EnrollmentForm::where('razorpay_order_id', $data['razorpay_order_id'])->firstOrFail();
+        $enrollmentForm->payment_status = PaymentStatus::CANCELLED;
+        $enrollmentForm->save();
+        return $enrollmentForm;
+    }
+
 }
 
 class CommonFilter implements Filter

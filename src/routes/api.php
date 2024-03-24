@@ -208,6 +208,7 @@ Route::prefix('course')->group(function () {
 });
 
 Route::post('/enrollment/verify', [EnrollmentFormCreateController::class, 'verify'])->name('user.enroll.verify');
+Route::post('/enrollment/cancelled', [EnrollmentFormCreateController::class, 'cancel'])->name('user.enroll.cancel');
 
 Route::prefix('branch')->group(function () {
     Route::get('/all', [UserBranchAllController::class, 'get'])->name('user.branch.all');
@@ -249,6 +250,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/main-detail', [UserTestDetailController::class, 'get'])->name('user.test.detail.main');
             Route::get('/apply', [UserTestApplyController::class, 'get'])->name('user.test.apply');
             Route::post('/apply/payment-verification', [UserTestApplyController::class, 'verify'])->name('user.test.apply.verify');
+            Route::post('/apply/payment-cencelled', [UserTestApplyController::class, 'cancel'])->name('user.test.apply.cancel');
             Route::get('/question-set', [UserTestQuestionSetController::class, 'get'])->name('user.test.question');
             Route::post('/fill-answer', [UserTestFillAnswerController::class, 'post'])->name('user.test.answer');
             Route::post('/eliminated', [UserTestEliminatedController::class, 'post'])->name('user.test.eliminated');
