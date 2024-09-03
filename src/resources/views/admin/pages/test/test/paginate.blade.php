@@ -41,6 +41,7 @@
                                             <th class="sort" data-sort="customer_name">Slug</th>
                                             <th class="sort" data-sort="customer_name">Description</th>
                                             <th class="sort" data-sort="customer_name">Test Status</th>
+                                            <th class="sort" data-sort="customer_name">Test Timer</th>
                                             <th class="sort" data-sort="customer_name">Test Payment Status</th>
                                             <th class="sort" data-sort="date">Created On</th>
                                             <th class="sort" data-sort="action">Action</th>
@@ -53,6 +54,11 @@
                                             <td class="customer_name">{{ $item->slug }}</td>
                                             <td class="customer_name">{{ Str::limit($item->description_unfiltered, 20) }}</td>
                                             @if($item->is_active == 1)
+                                            <td class="status"><span class="badge badge-soft-success text-uppercase">Active</span></td>
+                                            @else
+                                            <td class="status"><span class="badge badge-soft-danger text-uppercase">Inactive</span></td>
+                                            @endif
+                                            @if($item->is_timer_active == 1)
                                             <td class="status"><span class="badge badge-soft-success text-uppercase">Active</span></td>
                                             @else
                                             <td class="status"><span class="badge badge-soft-danger text-uppercase">Inactive</span></td>

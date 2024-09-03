@@ -55,12 +55,12 @@ class TestService
 
     public function getById(Int $id): Test|null
     {
-        return Test::findOrFail($id);
+        return Test::withSum('quizes', 'duration')->withSum('quizes', 'mark')->findOrFail($id);
     }
 
     public function getBySlug(String $slug): Test|null
     {
-        return Test::with('test_taken')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+        return Test::with(['test_taken'])->withSum('quizes', 'duration')->withSum('quizes', 'mark')->where('slug', $slug)->where('is_active', true)->firstOrFail();
     }
 
     public function create(array $data): Test

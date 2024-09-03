@@ -43,6 +43,17 @@
 
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="mt-4 mt-md-0">
+                                            <div>
+                                                <div class="form-check form-switch form-check-right mb-2">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="is_timer_active" name="is_timer_active" checked>
+                                                    <label class="form-check-label" for="is_timer_active">Test Timer</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <!--end row-->
@@ -260,6 +271,7 @@ validation
         var formData = new FormData();
         formData.append('is_active',document.getElementById('is_active').checked ? 1 : 0)
         formData.append('is_paid',document.getElementById('is_paid').checked ? 1 : 0)
+        formData.append('is_timer_active',document.getElementById('is_timer_active').checked ? 1 : 0)
         formData.append('name',document.getElementById('name').value)
         formData.append('slug',document.getElementById('slug').value)
         formData.append('description',editor.getData())

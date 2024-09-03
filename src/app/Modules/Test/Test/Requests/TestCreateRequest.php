@@ -36,6 +36,7 @@ class TestCreateRequest extends FormRequest
             'image_title' => 'nullable|string|max:500',
             'is_active' => 'required|boolean',
             'is_paid' => 'required|boolean',
+            'is_timer_active' => 'required|boolean',
             'amount' => 'nullable|required_if:is_paid,1|numeric|gt:0',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
@@ -53,6 +54,7 @@ class TestCreateRequest extends FormRequest
     {
         return [
             'is_active' => 'Active',
+            'is_timer_active' => 'Timer',
         ];
     }
 

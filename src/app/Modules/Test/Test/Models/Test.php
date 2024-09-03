@@ -36,6 +36,7 @@ class Test extends Model implements Sitemapable
         'image_title',
         'is_active',
         'is_paid',
+        'is_timer_active',
         'meta_title',
         'meta_description',
         'meta_keywords',
@@ -45,6 +46,7 @@ class Test extends Model implements Sitemapable
     protected $casts = [
         'is_active' => 'boolean',
         'is_paid' => 'boolean',
+        'is_timer_active' => 'boolean',
         'amount' => 'int',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
