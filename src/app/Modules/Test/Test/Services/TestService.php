@@ -26,7 +26,7 @@ class TestService
 
     public function paginateMain(Int $total = 10): LengthAwarePaginator
     {
-        $query = Test::with('test_taken')->where('is_active', true);
+        $query = Test::with('test_taken')->withSum('quizes', 'duration')->withSum('quizes', 'mark')->where('is_active', true);
         return QueryBuilder::for($query)
                 ->defaultSort('id')
                 ->allowedSorts('id', 'name')
