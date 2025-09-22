@@ -95,6 +95,9 @@
                                         <li class="nav-item">
                                             <a href="{{route('admission.puc.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('admission.puc.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> PUC Form </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a href="{{route('admission.registration.paginate.get')}}" class="nav-link {{strpos(url()->current(), route('admission.registration.paginate.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Registration </a>
+                                        </li>
 
                                     </ul>
                                 </div>

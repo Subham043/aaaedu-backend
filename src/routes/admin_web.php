@@ -14,6 +14,10 @@ use App\Modules\AdmissionForm\Controllers\AdmissionNotPucFormExcelController;
 use App\Modules\AdmissionForm\Controllers\AdmissionNotPucFormPaginateController;
 use App\Modules\AdmissionForm\Controllers\AdmissionPucFormExcelController;
 use App\Modules\AdmissionForm\Controllers\AdmissionPucFormPaginateController;
+use App\Modules\AdmissionTest\Controllers\AdmissionTestCreateController;
+use App\Modules\AdmissionTest\Controllers\AdmissionTestDeleteController;
+use App\Modules\AdmissionTest\Controllers\AdmissionTestExcelController;
+use App\Modules\AdmissionTest\Controllers\AdmissionTestPaginateController;
 use App\Modules\Authentication\Controllers\PasswordUpdateController;
 use App\Modules\Authentication\Controllers\ForgotPasswordController;
 use App\Modules\Authentication\Controllers\LoginController;
@@ -251,6 +255,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [AdmissionPucFormPaginateController::class, 'get', 'as' => 'admission.puc.paginate.get'])->name('admission.puc.paginate.get');
             Route::get('/excel', [AdmissionPucFormExcelController::class, 'get', 'as' => 'admission.puc.excel.get'])->name('admission.puc.excel.get');
             Route::get('/delete/{id}', [AdmissionFormDeleteController::class, 'get', 'as' => 'admission.puc.delete.get'])->name('admission.puc.delete.get');
+        });
+        Route::prefix('/registration')->group(function () {
+            Route::get('/', [AdmissionTestPaginateController::class, 'get', 'as' => 'admission.registration.paginate.get'])->name('admission.registration.paginate.get');
+            Route::get('/excel', [AdmissionTestExcelController::class, 'get', 'as' => 'admission.registration.excel.get'])->name('admission.registration.excel.get');
+            Route::get('/delete/{id}', [AdmissionTestDeleteController::class, 'get', 'as' => 'admission.registration.delete.get'])->name('admission.registration.delete.get');
+            Route::get('/download/{id}', [AdmissionTestCreateController::class, 'download', 'as' => 'admission.registration.download.get'])->name('admission.registration.download.get');
         });
     });
 

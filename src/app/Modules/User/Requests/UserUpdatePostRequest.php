@@ -28,7 +28,6 @@ class UserUpdatePostRequest extends UserCreatePostRequest
                         ->mixedCase()
                         ->numbers()
                         ->symbols()
-                        ->uncompromised()
             ],
         ];
     }

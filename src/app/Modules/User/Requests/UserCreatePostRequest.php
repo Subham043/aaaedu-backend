@@ -40,7 +40,6 @@ class UserCreatePostRequest extends FormRequest
                         ->mixedCase()
                         ->numbers()
                         ->symbols()
-                        ->uncompromised()
             ],
         ];
     }

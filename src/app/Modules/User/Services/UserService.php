@@ -39,6 +39,16 @@ class UserService
         return User::where('email', $email)->firstOrFail();
     }
 
+    public function findByEmail(String $email): User|null
+    {
+        return User::where('email', $email)->first();
+    }
+
+    public function findByPhone(String $phone): User|null
+    {
+        return User::where('phone', $phone)->first();
+    }
+
     public function create(array $data): User
     {
         $user = User::create($data);
