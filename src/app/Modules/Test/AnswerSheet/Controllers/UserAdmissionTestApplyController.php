@@ -5,44 +5,25 @@ namespace App\Modules\Test\AnswerSheet\Controllers;
 use App\Enums\ExamMode;
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
-use App\Modules\Test\AnswerSheet\Requests\EliminatedRequest;
-use App\Modules\Test\AnswerSheet\Services\AnswerSheetService;
-use App\Modules\Test\Test\Services\TestService;
+use App\Modules\Test\AnswerSheet\Resources\UserTestEnrollmentCollection;
+use App\Modules\Test\AnswerSheet\Services\AdmissionAnswerSheetService;
 use App\Modules\Test\Test\Services\AdmissionTestService;
 use App\Modules\AdmissionTest\Services\AdmissionTestService as AdmissionRegistrationService;
 
-class UserTestEliminatedController extends Controller
+class UserAdmissionTestApplyController extends Controller
 {
     private $testService;
     private $answerSheetService;
-    private $admissionTestService;
     private $registrationService;
 
-    public function __construct(TestService $testService, AdmissionTestService $admissionTestService, AnswerSheetService $answerSheetService, AdmissionRegistrationService $registrationService)
+    public function __construct(AdmissionTestService $testService, AdmissionAnswerSheetService $answerSheetService, AdmissionRegistrationService $registrationService)
     {
         $this->testService = $testService;
-        $this->answerSheetService = $answerSheetService;
-        $this->admissionTestService = $admissionTestService;
         $this->registrationService = $registrationService;
+        $this->answerSheetService = $answerSheetService;
     }
 
-    public function post(EliminatedRequest $request, $slug){
-        $test = $this->testService->getBySlug($slug);
-        try {
-            //code...
-            $this->answerSheetService->eliminated($request, $test);
-            return response()->json([
-                'message' => 'Eliminated successfully'
-            ], 200);
-        } catch (\Throwable $th) {
-            //throw $th;
-            return response()->json([
-                'message' => 'Exam is over already!'
-            ], 400);
-        }
-    }
-
-    public function postv2(EliminatedRequest $request, $slug){
+    public function get($slug){
         $admissionTest = $this->registrationService->getByUserId(auth()->user()->id);
         $path = $admissionTest->mode == ExamMode::ONLINE ? 'vii-aptitude-test' : null;
         switch ($admissionTest->class->value ?? '7th') {
@@ -69,17 +50,17 @@ class UserTestEliminatedController extends Controller
                 break;
         }
         if($admissionTest && $admissionTest->payment_status == PaymentStatus::PAID && $admissionTest->mode == ExamMode::ONLINE && $path==$slug){
-            $test = $this->admissionTestService->getBySlug($slug);
-            try {
-                //code...
-                $this->answerSheetService->eliminated($request, $test);
+            $test = $this->testService->getBySlug($slug);
+            $check_test_eligibility = $this->answerSheetService->check_test_eligibility($test);
+            if($check_test_eligibility['is_eligible'] && $check_test_eligibility['type']=='NEW'){
+                $apply_test = $this->answerSheetService->apply_test($test, $admissionTest);
                 return response()->json([
-                    'message' => 'Eliminated successfully'
+                    'message' => "Test applied successfully.",
+                    'test_enrollment' => UserTestEnrollmentCollection::make($apply_test),
                 ], 200);
-            } catch (\Throwable $th) {
-                //throw $th;
+            }else{
                 return response()->json([
-                    'message' => 'Exam is over already!'
+                    'message' => "You have already enrolled for the following online admission test.",
                 ], 400);
             }
         }

@@ -54,6 +54,17 @@
 
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="mt-4 mt-md-0">
+                                            <div>
+                                                <div class="form-check form-switch form-check-right mb-2">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="is_admission" name="is_admission" {{$data->is_admission==false ? '' : 'checked'}}>
+                                                    <label class="form-check-label" for="is_admission">Test For Admission</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <!--end row-->
@@ -296,7 +307,16 @@ validation
     try {
         var formData = new FormData();
         formData.append('is_active',document.getElementById('is_active').checked ? 1 : 0)
-        formData.append('is_paid',document.getElementById('is_paid').checked ? 1 : 0)
+        formData.append('is_admission',document.getElementById('is_admission').checked ? 1 : 0)
+        if(document.getElementById('is_admission').checked){
+            formData.append('is_paid',1)
+            formData.append('amount',99)
+        }else{
+            formData.append('is_paid',document.getElementById('is_paid').checked ? 1 : 0)
+            if(document.getElementById('is_paid').checked){
+                formData.append('amount',document.getElementById('amount').value)
+            }
+        }
         formData.append('is_timer_active',document.getElementById('is_timer_active').checked ? 1 : 0)
         formData.append('name',document.getElementById('name').value)
         formData.append('slug',document.getElementById('slug').value)
@@ -310,9 +330,6 @@ validation
         formData.append('image_alt',document.getElementById('image_alt').value)
         if((document.getElementById('image').files).length>0){
             formData.append('image',document.getElementById('image').files[0])
-        }
-        if(document.getElementById('is_paid').checked){
-            formData.append('amount',document.getElementById('amount').value)
         }
 
         const response = await axios.post('{{route('test.test.update.post', $data->id)}}', formData)

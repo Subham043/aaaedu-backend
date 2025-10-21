@@ -8,6 +8,7 @@ use App\Modules\Achiever\Student\Controllers\UserStudentPaginateController;
 use App\Modules\AdmissionForm\Controllers\AdmissionNotPucFormCreateController;
 use App\Modules\AdmissionForm\Controllers\AdmissionPucFormCreateController;
 use App\Modules\AdmissionTest\Controllers\AdmissionTestCreateController;
+use App\Modules\AdmissionTest\Controllers\AdmissionTestInfoController;
 use App\Modules\Authentication\Controllers\UserProfileController;
 use App\Modules\Authentication\Controllers\UserForgotPasswordController;
 use App\Modules\Authentication\Controllers\UserLoginController;
@@ -59,6 +60,7 @@ use App\Modules\Seo\Controllers\UserSeoDetailController;
 use App\Modules\Settings\Controllers\General\UserGeneralController;
 use App\Modules\TeamMember\Management\Controllers\UserManagementAllController;
 use App\Modules\TeamMember\Staff\Controllers\UserStaffPaginateController;
+use App\Modules\Test\AnswerSheet\Controllers\UserAdmissionTestApplyController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestApplyController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestEliminatedController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestFillAnswerController;
@@ -66,6 +68,7 @@ use App\Modules\Test\AnswerSheet\Controllers\UserTestQuestionSetController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestReportController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestReportPdfController;
 use App\Modules\Test\AnswerSheet\Controllers\UserTestTakenPaginateController;
+use App\Modules\Test\Test\Controllers\UserAdmissionTestController;
 use App\Modules\Test\Test\Controllers\UserTestAllController;
 use App\Modules\Test\Test\Controllers\UserTestDetailController;
 use App\Modules\Test\Test\Controllers\UserTestPaginateController;
@@ -120,7 +123,21 @@ Route::prefix('admission')->group(function () {
     Route::post('/not-puc', [AdmissionNotPucFormCreateController::class, 'post'])->name('user.admission_not_puc_form.create');
     Route::post('/registration', [AdmissionTestCreateController::class, 'post'])->name('user.admission_registration.create');
     Route::post('/verify', [AdmissionTestCreateController::class, 'verify'])->name('user.admission_registration.verify');
-    Route::post('/download/{id}', [AdmissionTestCreateController::class, 'download'])->name('user.admission_registration.download');
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::prefix('info')->group(function () {
+            Route::post('/', [AdmissionTestInfoController::class, 'index'])->name('user.admission_registration.info');
+            Route::post('/download', [AdmissionTestInfoController::class, 'download'])->name('user.admission_registration.download');
+            Route::prefix('test/{slug}')->group(function () {
+                Route::get('/', [UserAdmissionTestController::class, 'get'])->name('user.admission_registration.detail.main');
+                Route::get('/apply', [UserAdmissionTestApplyController::class, 'get'])->name('user.admission_registration.apply');
+                Route::get('/question-set', [UserTestQuestionSetController::class, 'getv2'])->name('user.admission_registration.question');
+                Route::post('/fill-answer', [UserTestFillAnswerController::class, 'postv2'])->name('user.admission_registration.answer');
+                Route::post('/eliminated', [UserTestEliminatedController::class, 'postv2'])->name('user.admission_registration.eliminated');
+                Route::get('/report', [UserTestReportController::class, 'getv2'])->name('user.admission_registration.report');
+                Route::get('/report-download-request', [UserTestReportPdfController::class, 'getv2'])->name('user.admission_registration.report_download_request');
+            });
+        });
+    });
 });
 
 Route::prefix('counter')->group(function () {

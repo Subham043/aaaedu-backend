@@ -33,6 +33,7 @@
                                     <thead class="table-light">
                                         <tr>
                                             <th class="sort" data-sort="customer_name">Test Name</th>
+                                            <th class="sort" data-sort="customer_name">Test For Admission</th>
                                             <th class="sort" data-sort="customer_name">User Name</th>
                                             <th class="sort" data-sort="customer_name">User Email</th>
                                             <th class="sort" data-sort="customer_name">User Phone</th>
@@ -48,6 +49,11 @@
                                         @foreach ($data->items() as $item)
                                         <tr>
                                             <td class="customer_name">{{ $item->test->name }}</td>
+                                            @if($item->test->is_admission == 1)
+                                            <td class="status"><span class="badge badge-soft-success text-uppercase">Yes</span></td>
+                                            @else
+                                            <td class="status"><span class="badge badge-soft-danger text-uppercase">No</span></td>
+                                            @endif
                                             <td class="customer_name">{{ $item->user->name }}</td>
                                             <td class="customer_name">{{ $item->user->email }}</td>
                                             <td class="customer_name">{{ $item->user->phone }}</td>

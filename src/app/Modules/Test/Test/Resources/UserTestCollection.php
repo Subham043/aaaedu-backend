@@ -27,6 +27,7 @@ class UserTestCollection extends JsonResource
             'image_alt' => $this->image_alt,
             'image' => asset($this->image),
             'is_active' => $this->is_active,
+            'is_admission' => $this->is_admission,
             'is_paid' => $this->is_paid,
             'is_timer_active' => $this->is_timer_active,
             'meta_title' => $this->meta_title,

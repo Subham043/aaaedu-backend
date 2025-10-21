@@ -22,6 +22,7 @@ class TestUpdateRequest extends TestCreateRequest
             'image_title' => 'nullable|string|max:500',
             'is_active' => 'required|boolean',
             'is_paid' => 'required|boolean',
+            'is_admission' => 'required|boolean',
             'is_timer_active' => 'required|boolean',
             'amount' => 'nullable|required_if:is_paid,1|numeric|gt:0',
             'meta_title' => 'nullable|string',

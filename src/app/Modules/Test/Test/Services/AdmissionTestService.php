@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class TestService
+class AdmissionTestService
 {
 
     public function all(): Collection
@@ -21,12 +21,12 @@ class TestService
 
     public function all_main(): Collection
     {
-        return Test::where('is_active', true)->where('is_admission', false)->get();
+        return Test::where('is_active', true)->where('is_admission', true)->get();
     }
 
     public function paginateMain(Int $total = 10): LengthAwarePaginator
     {
-        $query = Test::with('test_taken')->withSum('quizes', 'duration')->withSum('quizes', 'mark')->where('is_active', true)->where('is_admission', false);
+        $query = Test::with('test_taken')->withSum('quizes', 'duration')->withSum('quizes', 'mark')->where('is_active', true)->where('is_admission', true);
         return QueryBuilder::for($query)
                 ->defaultSort('id')
                 ->allowedSorts('id', 'name')
@@ -60,7 +60,7 @@ class TestService
 
     public function getBySlug(String $slug): Test|null
     {
-        return Test::with(['test_taken'])->withSum('quizes', 'duration')->withSum('quizes', 'mark')->where('slug', $slug)->where('is_active', true)->where('is_admission', false)->firstOrFail();
+        return Test::with(['test_taken'])->withSum('quizes', 'duration')->withSum('quizes', 'mark')->where('slug', $slug)->where('is_active', true)->where('is_admission', true)->firstOrFail();
     }
 
     public function create(array $data): Test

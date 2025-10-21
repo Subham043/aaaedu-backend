@@ -36,6 +36,11 @@ class AdmissionTestService
         return AdmissionTest::findOrFail($id);
     }
 
+    public function getByUserId(Int $user_id): AdmissionTest|null
+    {
+        return AdmissionTest::where('user_id', $user_id)->first();
+    }
+
     public function findByEmail(String $email): AdmissionTest|null
     {
         return AdmissionTest::where('email', $email)->first();

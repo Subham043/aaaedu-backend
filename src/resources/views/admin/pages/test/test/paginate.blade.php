@@ -41,6 +41,7 @@
                                             <th class="sort" data-sort="customer_name">Slug</th>
                                             <th class="sort" data-sort="customer_name">Description</th>
                                             <th class="sort" data-sort="customer_name">Test Status</th>
+                                            <th class="sort" data-sort="customer_name">Test For Admission</th>
                                             <th class="sort" data-sort="customer_name">Test Timer</th>
                                             <th class="sort" data-sort="customer_name">Test Payment Status</th>
                                             <th class="sort" data-sort="date">Created On</th>
@@ -58,12 +59,17 @@
                                             @else
                                             <td class="status"><span class="badge badge-soft-danger text-uppercase">Inactive</span></td>
                                             @endif
+                                            @if($item->is_admission == 1)
+                                            <td class="status"><span class="badge badge-soft-success text-uppercase">Yes</span></td>
+                                            @else
+                                            <td class="status"><span class="badge badge-soft-danger text-uppercase">No</span></td>
+                                            @endif
                                             @if($item->is_timer_active == 1)
                                             <td class="status"><span class="badge badge-soft-success text-uppercase">Active</span></td>
                                             @else
                                             <td class="status"><span class="badge badge-soft-danger text-uppercase">Inactive</span></td>
                                             @endif
-                                            @if($item->is_paid == 1)
+                                            @if($item->is_paid == 1 || $item->is_admission == 1)
                                             <td class="status"><span class="badge badge-soft-success text-uppercase">Yes @ Rs. {{$item->amount}}</span></td>
                                             @else
                                             <td class="status"><span class="badge badge-soft-primary text-uppercase">Free</span></td>
