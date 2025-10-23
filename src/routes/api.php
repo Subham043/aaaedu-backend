@@ -125,8 +125,9 @@ Route::prefix('admission')->group(function () {
     Route::post('/verify', [AdmissionTestCreateController::class, 'verify'])->name('user.admission_registration.verify');
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::prefix('info')->group(function () {
-            Route::post('/', [AdmissionTestInfoController::class, 'index'])->name('user.admission_registration.info');
-            Route::post('/download', [AdmissionTestInfoController::class, 'download'])->name('user.admission_registration.download');
+            Route::get('/', [AdmissionTestInfoController::class, 'index'])->name('user.admission_registration.info');
+            Route::get('/repay', [AdmissionTestInfoController::class, 'repay'])->name('user.admission_registration.repay');
+            Route::get('/download', [AdmissionTestInfoController::class, 'download'])->name('user.admission_registration.download');
             Route::prefix('test/{slug}')->group(function () {
                 Route::get('/', [UserAdmissionTestController::class, 'get'])->name('user.admission_registration.detail.main');
                 Route::get('/apply', [UserAdmissionTestApplyController::class, 'get'])->name('user.admission_registration.apply');

@@ -92,6 +92,8 @@ class UserTestReportController extends Controller
                 'total_answer_count' => $total_answer_count,
             ], 200);
         }
-        abort(404);
+        return response()->json([
+            'message' => "Data not found",
+        ], 404);
     }
 }

@@ -101,7 +101,9 @@ class UserTestReportPdfController extends Controller
             $pdf->save(storage_path('app/public/reports/').$fileName.'.pdf');
             return response()->json(['file_key' => $fileName], 200);
         }
-        abort(404);
+        return response()->json([
+            'message' => "Data not found",
+        ], 404);
     }
 
     public function download($fileName){

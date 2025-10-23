@@ -36,16 +36,15 @@ class AdmissionTestCreateController extends Controller
             if(!$admissionTest){
                 $receipt = Str::uuid()->toString();
                 $userByEmail = $this->userService->findByEmail($request->email);
-                $userByPhone = $this->userService->findByPhone($request->father_phone);
-                if( !$userByEmail && !$userByPhone ){
+                if( !$userByEmail ){
                     $user = $this->userService->create([
                         'email' => $request->email,
                         'name' => $request->name,
                         'password' => $request->password,
-                        'phone' => $request->father_phone,
+                        'phone' => null,
                     ]);
                 }else{
-                    $user = $userByEmail ?? $userByPhone;
+                    $user = $userByEmail;
                 }
                 $admissionTest = $this->admissionTestService->create(
                     [

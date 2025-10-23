@@ -25,6 +25,7 @@ class UserLoginController extends Controller
             (new RateLimitService($request))->clearRateLimit();
             $token = $this->authService->generate_token(auth()->user());
             return response()->json([
+                'status' => true,
                 'message' => 'Logged in successfully.',
                 'token_type' => 'Bearer',
                 'token' => $token,
@@ -32,6 +33,7 @@ class UserLoginController extends Controller
             ], 200);
         }
         return response()->json([
+            'status' => false,
             'message' => 'Oops! You have entered invalid credentials',
         ], 400);
     }

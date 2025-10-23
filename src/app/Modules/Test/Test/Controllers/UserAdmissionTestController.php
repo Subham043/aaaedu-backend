@@ -53,6 +53,8 @@ class UserAdmissionTestController extends Controller
                 'test' => UserTestCollection::make($test),
             ], 200);
         }
-        abort(404);
+        return response()->json([
+            'message' => "Data not found",
+        ], 404);
     }
 }

@@ -31,7 +31,7 @@ class AdmissionTestService
                 ->defaultSort('id')
                 ->allowedSorts('id', 'name')
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter, null, false),
+                    AllowedFilter::custom('search', new CCommonFilter, null, false),
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         $query->whereHas('test_taken', function($q) use($value) {
                             $q->where('test_status', $value);
@@ -47,7 +47,7 @@ class AdmissionTestService
         $query = Test::latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
-                    AllowedFilter::custom('search', new CommonFilter, null, false),
+                    AllowedFilter::custom('search', new CCommonFilter, null, false),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -102,7 +102,7 @@ class AdmissionTestService
 
 }
 
-class CommonFilter implements Filter
+class CCommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {

@@ -98,7 +98,7 @@ class CommonFilter implements Filter
     {
         $query->where(function($q) use($value){
             $q->where('name', 'LIKE', '%' . $value . '%')
-            ->orWhere('emial', 'LIKE', '%' . $value . '%')
+            ->orWhere('email', 'LIKE', '%' . $value . '%')
             ->orWhere('school_name', 'LIKE', '%' . $value . '%')
             ->orWhere('class', 'LIKE', '%' . $value . '%')
             ->orWhere('father_name', 'LIKE', '%' . $value . '%')

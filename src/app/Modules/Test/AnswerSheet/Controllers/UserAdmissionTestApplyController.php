@@ -64,6 +64,8 @@ class UserAdmissionTestApplyController extends Controller
                 ], 400);
             }
         }
-        abort(404);
+        return response()->json([
+            'message' => "Data not found",
+        ], 404);
     }
 }

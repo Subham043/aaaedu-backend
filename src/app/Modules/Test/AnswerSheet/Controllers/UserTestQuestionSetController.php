@@ -81,6 +81,8 @@ class UserTestQuestionSetController extends Controller
                 'current_question_count' => $current_question_count,
             ], 200);
         }
-        abort(404);
+        return response()->json([
+            'message' => "Data not found",
+        ], 404);
     }
 }
