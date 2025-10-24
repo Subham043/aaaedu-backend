@@ -122,8 +122,8 @@ validation
 
         const response = await axios.post('{{route('test.quiz.create.post', $test_id)}}', formData)
         successToast(response.data.message)
-        event.target.reset();
-        setInterval(location.reload(), 1500);
+        //event.target.reset();
+        //setInterval(location.reload(), 1500);
     }catch (error){
         if(error?.response?.data?.errors?.mark){
             validation.showErrors({'#mark': error?.response?.data?.errors?.mark[0]})
