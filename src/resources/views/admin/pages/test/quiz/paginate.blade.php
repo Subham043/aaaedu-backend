@@ -51,7 +51,7 @@
                                     <tbody class="list form-check-all">
                                         @foreach ($data->items() as $key=>$item)
                                         <tr>
-                                            <td class="customer_name">{{ ($key+1) * $data->currentPage() }}</td>
+                                            <td class="customer_name">{{ ($key+1) + ($data->currentPage()==1 ? 0 : ((10*$data->currentPage())-10)) }}</td>
                                             <td class="customer_name">{{ $item->mark }}</td>
                                             <td class="customer_name">{{ $item->negative_mark }}</td>
                                             <td class="customer_name">{{ $item->duration }} mins</td>
