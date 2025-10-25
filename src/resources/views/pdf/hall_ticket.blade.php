@@ -200,7 +200,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th class="sort" data-sort="customer_name">Exam Date</th>
-                                                            <td class="sort" data-sort="customer_name">{{ $admissionTest->exam_date }}</td>
+                                                            <td class="sort" data-sort="customer_name">{{ $admissionTest->exam_date }}  (10.30a.m - 1p.m)</td>
                                                         </tr>
                                                     </thead>
                                                 </table>
