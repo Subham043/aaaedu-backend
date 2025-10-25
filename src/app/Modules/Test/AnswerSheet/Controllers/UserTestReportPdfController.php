@@ -38,6 +38,21 @@ class UserTestReportPdfController extends Controller
         $alloted_score = $this->answerSheetService->total_alloted_score($test_report->id);
         $subject_wise_score = $this->answerSheetService->total_alloted_score_grouped_by_subjects($test_report->id);
         $total_answer_count = $this->answerSheetService->answer_count_main($test_report->id);
+        $percentage = (($alloted_score / $total_score) * 100);
+        $grade = 'F';
+        if ($percentage >= 90 && $percentage <= 100) {
+            $grade = 'A';
+        } else if ($percentage >= 75 && $percentage <= 89) {
+            $grade = 'B';
+        } else if ($percentage >= 60 && $percentage <= 74) {
+            $grade = 'C';
+        } else if ($percentage >= 45 && $percentage <= 59) {
+            $grade = 'D';
+        } else if ($percentage >= 35 && $percentage <= 44) {
+            $grade = 'E';
+        } else if ($percentage >= 0 && $percentage <= 34) {
+            $grade = 'F';
+        }
 
         $data = [
             'report' => $test_report,
@@ -45,7 +60,9 @@ class UserTestReportPdfController extends Controller
             'total_score' => $total_score,
             'alloted_score' => $alloted_score,
             'subject_wise_score' => $subject_wise_score,
-            'total_answer_count' => $total_answer_count
+            'total_answer_count' => $total_answer_count,
+            'percentage' => $percentage,
+            'grade' => $grade,
         ];
         $fileName = str()->uuid();
         $pdf = Pdf::loadView('report.report', $data)->setPaper('a4', 'landscape');
@@ -87,6 +104,21 @@ class UserTestReportPdfController extends Controller
             $alloted_score = $this->answerSheetService->total_alloted_score($test_report->id);
             $subject_wise_score = $this->answerSheetService->total_alloted_score_grouped_by_subjects($test_report->id);
             $total_answer_count = $this->answerSheetService->answer_count_main($test_report->id);
+            $percentage = (($alloted_score / $total_score) * 100);
+            $grade = 'F';
+            if ($percentage >= 95 && $percentage <= 100) {
+                $grade = 'A';
+            } else if ($percentage >= 90 && $percentage <= 94) {
+                $grade = 'B';
+            } else if ($percentage >= 85 && $percentage <= 89) {
+                $grade = 'C';
+            } else if ($percentage >= 75 && $percentage <= 84) {
+                $grade = 'D';
+            } else if ($percentage >= 65 && $percentage <= 74) {
+                $grade = 'E';
+            } else if ($percentage >= 0 && $percentage <= 64) {
+                $grade = 'F';
+            }
 
             $data = [
                 'report' => $test_report,
@@ -94,7 +126,9 @@ class UserTestReportPdfController extends Controller
                 'total_score' => $total_score,
                 'alloted_score' => $alloted_score,
                 'subject_wise_score' => $subject_wise_score,
-                'total_answer_count' => $total_answer_count
+                'total_answer_count' => $total_answer_count,
+                'percentage' => $percentage,
+                'grade' => $grade,
             ];
             $fileName = str()->uuid();
             $pdf = Pdf::loadView('report.report', $data)->setPaper('a4', 'landscape');

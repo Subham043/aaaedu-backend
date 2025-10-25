@@ -69,6 +69,10 @@
                                                     <div class="edit">
                                                         <a href="{{route('test.taken.report.get', $item->id)}}" class="btn btn-sm btn-warning edit-item-btn">Report</a>
                                                     </div>
+
+                                                    <div class="edit">
+                                                        <a href="{{route('test.taken.report.download', $item->id)}}" download class="btn btn-sm btn-dark edit-item-btn">Download Report</a>
+                                                    </div>
                                                     @endif
 
                                                     @can('delete tests')

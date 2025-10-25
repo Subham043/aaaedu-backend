@@ -1,5 +1,84 @@
 @extends('admin.layouts.dashboard')
 
+@section('css')
+
+<style nonce="{{ csp_nonce() }}">
+
+.pp-relative{
+    position: relative;
+}
+
+.featured-badge {
+  --badge-size: 4rem;
+  height: var(--badge-size);
+  width: var(--badge-size);
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+}
+/* add ribbons */
+.featured-badge::before,
+.featured-badge::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: calc(var(--badge-size) / 4);
+  height: calc(var(--badge-size) * 0.75);
+  background: #ff0000;
+  border-width: 0 calc(var(--badge-size) / 16);
+  border-color: #140037;
+  border-style: solid;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 90%, 0% 100%);
+}
+.featured-badge::before {
+  left: 0; transform: translateX(100%) rotate(25deg);
+  z-index:1;
+}
+.featured-badge::after {
+  right: 0; transform: translateX(-100%) rotate(-25deg);
+  z-index: 1;
+}
+/* text */
+.featured-badge span {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--badge-size);
+  height: var(--badge-size);
+  font-size: calc(var(--badge-size) / 3);
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0c808;
+  box-shadow: 0.025em 0.025em 0.1em #303030;
+  border-radius: 50%;
+}
+.feature-badge-color-1 span {
+  background: #f0c808;
+  background-color: #f0c808;
+  z-index:2;
+}
+/* text area */
+.featured-badge span::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%; height: 85%;
+  background: #c4a408;
+  box-shadow: 0.025em 0.025em 0.1em #303030 inset;
+  border-radius: 50%;
+  z-index: -1;
+}
+.feature-badge-color-1 span::before {
+  background: #c4a408;
+  background-color: #c4a408;
+}
+</style>
+
+@stop
 
 
 @section('content')
@@ -12,12 +91,26 @@
         <!-- end page title -->
 
         <div class="row">
-            @include('admin.includes.back_button', ['link'=>route('test.taken.paginate.get')])
+            <div class="row g-4 mb-3 w-80">
+                <div class="col-sm-auto">
+                    <div>
+                        <a href="{{route('test.taken.paginate.get')}}" type="button" class="btn btn-dark add-btn" id="create-btn"><i class="ri-arrow-go-back-line align-bottom me-1"></i> Go Back</a>
+                    </div>
+                </div>
+                <div class="col-sm-auto mr-5">
+                    <div>
+                        <a href="{{route('test.taken.report.download', $report->id)}}" download="" type="button" class="btn btn-warning add-btn" id="create-btn"><i class="ri-file-download-line align-bottom me-1"></i> Download Report</a>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="card">
 
-                    <div class="text-center bg-danger py-2">
+                    <div class="text-center bg-danger py-2 pp-relative">
                         <h4 class="text-light m-0">TEST INFO</h4>
+                        <div class="featured-badge feature-badge-color-1">
+                            <span>{{ $grade }}</span>
+                        </div>
                     </div>
                     <div class="card-body pb-0">
                         <div id="customerList">
@@ -102,6 +195,8 @@
                                             <th class="sort" data-sort="customer_name">Questions Attempted</th>
                                             <th class="sort" data-sort="customer_name">Total Marks</th>
                                             <th class="sort" data-sort="customer_name">Marks Alloted</th>
+                                            <th class="sort" data-sort="customer_name">Percentage</th>
+                                            <th class="sort" data-sort="customer_name">Grade</th>
                                             </tr>
                                     </thead>
                                     <tbody class="list form-check-all text-center">
@@ -110,6 +205,8 @@
                                             <td class="customer_name">{{ $total_answer_count }}</td>
                                             <td class="customer_name">{{ $total_score }}</td>
                                             <td class="customer_name">{{ $alloted_score }}</td>
+                                            <td class="customer_name">{{ $percentage }}</td>
+                                            <td class="customer_name">{{ $grade }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

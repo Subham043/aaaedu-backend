@@ -237,6 +237,8 @@
                                                             <th class="sort" data-sort="customer_name">Questions Attempted</th>
                                                             <th class="sort" data-sort="customer_name">Total Marks</th>
                                                             <th class="sort" data-sort="customer_name">Marks Alloted</th>
+                                                            <th class="sort" data-sort="customer_name">Percentage</th>
+                                                            <th class="sort" data-sort="customer_name">Grade</th>
                                                             </tr>
                                                     </thead>
                                                     <tbody class="list form-check-all text-center">
@@ -245,6 +247,8 @@
                                                             <td class="customer_name">{{ $total_answer_count }}</td>
                                                             <td class="customer_name">{{ $total_score }}</td>
                                                             <td class="customer_name">{{ $alloted_score }}</td>
+                                                            <td class="customer_name">{{ $percentage }}</td>
+                                                            <td class="customer_name">{{ $grade }}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

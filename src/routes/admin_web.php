@@ -499,6 +499,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/taken')->group(function () {
             Route::get('/', [TestTakenPaginateController::class, 'get', 'as' => 'test.taken.paginate.get'])->name('test.taken.paginate.get');
             Route::get('/report/{id}', [TestTakenReportController::class, 'get', 'as' => 'test.taken.report.get'])->name('test.taken.report.get');
+            Route::get('/download/{id}', [TestTakenReportController::class, 'download', 'as' => 'test.taken.report.download'])->name('test.taken.report.download');
             Route::get('/delete/{id}', [TestTakenDeleteController::class, 'get', 'as' => 'test.taken.delete.get'])->name('test.taken.delete.get');
         });
 
