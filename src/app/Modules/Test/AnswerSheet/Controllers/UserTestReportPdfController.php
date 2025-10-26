@@ -38,19 +38,19 @@ class UserTestReportPdfController extends Controller
         $alloted_score = $this->answerSheetService->total_alloted_score($test_report->id);
         $subject_wise_score = $this->answerSheetService->total_alloted_score_grouped_by_subjects($test_report->id);
         $total_answer_count = $this->answerSheetService->answer_count_main($test_report->id);
-        $percentage = (($alloted_score / $total_score) * 100);
+        $percentage = round((($alloted_score / $total_score) * 100), 2);
         $grade = 'F';
-        if ($percentage >= 90 && $percentage <= 100) {
+        if (intval($percentage) >= 90 && intval($percentage) <= 100) {
             $grade = 'A';
-        } else if ($percentage >= 75 && $percentage <= 89) {
+        } else if (intval($percentage) >= 75 && intval($percentage) <= 89) {
             $grade = 'B';
-        } else if ($percentage >= 60 && $percentage <= 74) {
+        } else if (intval($percentage) >= 60 && intval($percentage) <= 74) {
             $grade = 'C';
-        } else if ($percentage >= 45 && $percentage <= 59) {
+        } else if (intval($percentage) >= 45 && intval($percentage) <= 59) {
             $grade = 'D';
-        } else if ($percentage >= 35 && $percentage <= 44) {
+        } else if (intval($percentage) >= 35 && intval($percentage) <= 44) {
             $grade = 'E';
-        } else if ($percentage >= 0 && $percentage <= 34) {
+        } else if (intval($percentage) >= 0 && intval($percentage) <= 34) {
             $grade = 'F';
         }
 
@@ -104,19 +104,19 @@ class UserTestReportPdfController extends Controller
             $alloted_score = $this->answerSheetService->total_alloted_score($test_report->id);
             $subject_wise_score = $this->answerSheetService->total_alloted_score_grouped_by_subjects($test_report->id);
             $total_answer_count = $this->answerSheetService->answer_count_main($test_report->id);
-            $percentage = (($alloted_score / $total_score) * 100);
+            $percentage = round((($alloted_score / $total_score) * 100), 2);
             $grade = 'F';
-            if ($percentage >= 95 && $percentage <= 100) {
+            if (intval($percentage) >= 95 && intval($percentage) <= 100) {
                 $grade = 'A';
-            } else if ($percentage >= 90 && $percentage <= 94) {
+            } else if (intval($percentage) >= 90 && intval($percentage) <= 94) {
                 $grade = 'B';
-            } else if ($percentage >= 85 && $percentage <= 89) {
+            } else if (intval($percentage) >= 85 && intval($percentage) <= 89) {
                 $grade = 'C';
-            } else if ($percentage >= 75 && $percentage <= 84) {
+            } else if (intval($percentage) >= 75 && intval($percentage) <= 84) {
                 $grade = 'D';
-            } else if ($percentage >= 65 && $percentage <= 74) {
+            } else if (intval($percentage) >= 65 && intval($percentage) <= 74) {
                 $grade = 'E';
-            } else if ($percentage >= 0 && $percentage <= 64) {
+            } else if (intval($percentage) >= 0 && intval($percentage) <= 64) {
                 $grade = 'F';
             }
 
