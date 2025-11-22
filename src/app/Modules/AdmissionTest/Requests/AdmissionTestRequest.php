@@ -43,7 +43,7 @@ class AdmissionTestRequest extends FormRequest
             'mother_phone' => 'required|numeric|digits:10',
             'address' => 'required|string|max:500',
             'program' => 'required|string|max:500',
-            'image' => 'required|image|min:1|max:5000',
+            'image' => 'nullable|image|min:1|max:5000',
             'class' => ['required', new Enum(AdmissionTestClassEnum::class)],
             'mode' => ['required', new Enum(ExamMode::class)],
             'exam_date' => ['nullable','required_if:mode,'.ExamMode::OFFLINE->value, 'string'],

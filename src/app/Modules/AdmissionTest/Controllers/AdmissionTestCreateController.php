@@ -51,19 +51,23 @@ class AdmissionTestCreateController extends Controller
                         ...$request->except('image'),
                         'amount' => '99',
                         'receipt' => $receipt,
-                        'razorpay_order_id' => (new RazorpayService)->create_order_id(99.00, $receipt),
+                        "payment_status" => PaymentStatus::PAID,
+                        // 'razorpay_order_id' => (new RazorpayService)->create_order_id(99.00, $receipt),
                         'user_id' => $user->id
                     ]
                 );
-                if($request->hasFile('image')){
-                    $this->admissionTestService->saveImage($admissionTest);
-                }
+                // if($request->hasFile('image')){
+                //     $this->admissionTestService->saveImage($admissionTest);
+                // }
                 (new RateLimitService($request))->clearRateLimit();
+                dispatch(new AdmissionTestEmailJob($admissionTest));
             }else{
                 if($admissionTest->payment_status == PaymentStatus::PENDING){
                     $admissionTest = $this->admissionTestService->update([
-                        'razorpay_order_id' => (new RazorpayService)->create_order_id(99.00, $admissionTest->receipt),
+                        // 'razorpay_order_id' => (new RazorpayService)->create_order_id(99.00, $admissionTest->receipt),
+                        "payment_status" => PaymentStatus::PAID,
                     ], $admissionTest);
+                    dispatch(new AdmissionTestEmailJob($admissionTest));
                 }
             }
 

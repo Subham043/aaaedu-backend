@@ -178,9 +178,9 @@
                                                         <tr>
                                                             <th class="sort" data-sort="customer_name">Name</th>
                                                             <td class="sort" data-sort="customer_name">{{ $admissionTest->name }}</td>
-                                                            <td class="sort" data-sort="customer_name" rowspan="6" style="text-align:center; vertical-align:middle; padding:10px;">
+                                                            {{-- <td class="sort" data-sort="customer_name" rowspan="6" style="text-align:center; vertical-align:middle; padding:10px;">
                                                                 <img src="{{ storage_path('app/public/' . str($admissionTest->image)->replace('storage/', '') ?? '') }}" style="object-fit: contain; width: 140px" alt="sd">
-                                                            </td>
+                                                            </td> --}}
                                                         </tr>
                                                         <tr>
                                                             <th class="sort" data-sort="customer_name">Register No</th>
